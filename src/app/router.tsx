@@ -1,15 +1,15 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import PublicLayout from '../layouts/PublicLayout';
 import HomePage from '../features/parkings/pages/HomePage';
 
-export const AppRouter = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route element={<PublicLayout />}>
-        <Route path="/" element={<HomePage />} />
-        {/*<Route path="/login" element={<LoginPage />} />*/}
-        {/* <Route path="/register" element={<RegisterPage />} /> */}
-      </Route>
-    </Routes>
-  </BrowserRouter>
-);
+export const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <PublicLayout />,
+    children: [
+      { index: true, element: <HomePage /> },
+      // { path: 'login', element: <LoginPage /> },
+      // { path: 'register', element: <RegisterPage /> },
+    ],
+  },
+]);
