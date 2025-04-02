@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import { red } from "@mui/material/colors";
 
 export const theme = createTheme({
     palette: {
@@ -14,6 +15,9 @@ export const theme = createTheme({
       background: {
         default: '#F6FFFC', //bg-color: white
       },
+      error: {
+        main: red.A400, //error
+    }
     },
     typography: {
       fontFamily: 'Roboto, Arial, sans-serif',
