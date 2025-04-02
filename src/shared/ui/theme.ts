@@ -9,7 +9,7 @@ export const theme = createTheme({
         main: '#FFDE59', // yellow
       },
       info: {
-        main: '#A1ABFF', // light blues
+        main: '#A1ABFF', // light blue
       },
       background: {
         default: '#F6FFFC', //bg-color: white
