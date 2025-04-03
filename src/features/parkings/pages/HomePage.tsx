@@ -1,8 +1,17 @@
-const HomePage = () => (
-  <div>
-    <h1>Página de inicio</h1>
-    <p>Animo!!!!</p>
-  </div>
-);
+import { Home, FAQAccordion } from "../../../shared/ui/components";
+
+const HomePage = () => {
+  return (
+    <>
+       <Home />
+       <FAQAccordion />
+    </>
+   
+  )
+}
+    
 
 export default HomePage;
+
+
+
