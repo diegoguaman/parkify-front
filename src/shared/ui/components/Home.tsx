@@ -1,9 +1,10 @@
+import React from 'react';
 import { Box, Button, Card, CardContent, Container, Grid,Typography } from '@mui/material';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 import TestimonialCard from "./TestimonialCard";
 
-const Home = () => {
+const Home : React.FC = () => {
   return (
     <Container  sx={{ mt: 4 }}
     

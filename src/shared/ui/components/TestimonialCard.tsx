@@ -1,7 +1,8 @@
+import React from "react";
 import { Stack,Card, Typography, Box, Avatar } from "@mui/material";
 import FormatQuote from "@mui/icons-material/FormatQuote";
 
-const TestimonialCard = () => {
+const TestimonialCard : React.FC = () => {
     return (
       <Stack spacing={2} alignItems="center">
         {/* Contenedor del testimonio */}

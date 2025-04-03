@@ -1,10 +1,11 @@
+import React from "react";
 import { Home, FAQAccordion } from "../../../shared/ui/components";
 
-const HomePage = () => {
+const HomePage: React.FC = () => {
   return (
     <>
-       <Home />
-       <FAQAccordion />
+        <Home />
+        <FAQAccordion />
     </>
    
   )
