@@ -40,7 +40,7 @@ const FAQAccordion: React.FC = () => {
             key={index} 
             expanded={expanded === index}
             onChange={handleChange(index)}
-            sx={{ boxShadow: "none", backgroundColor: "transparent" }}>
+            sx={{ boxShadow: "none", backgroundColor: "background" }}>
           <AccordionSummary
             expandIcon={(expanded === index) ? <RemoveCircleOutlineIcon color='primary'/> : <AddCircleOutlineIcon color='primary' />}
             sx={{

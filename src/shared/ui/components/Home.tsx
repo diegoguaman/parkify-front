@@ -94,7 +94,7 @@ const Home : React.FC = () => {
         xs={12} 
         md={4} 
         key={index} 
-        sx={{ width: { xs: "90%", md: "auto" }, mx: "auto", textAlign: "center" }}
+        sx={{ width: { xs: "90%", md: "unset" }, mx: "auto", textAlign: "center" }}
       >
         <AccessTimeFilledIcon sx={{ fontSize: 50, color: "primary.main" }} />
         <Typography variant="h6" fontWeight="bold">{step}</Typography>
