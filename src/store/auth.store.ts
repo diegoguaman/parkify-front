@@ -7,10 +7,11 @@ interface AuthState {
         login:(token: string) => void;
         logout: () => void;
         checkAuth: () => void;
+        getAuthState: () => AuthState;
 }
 
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set, get) => ({
     token: localStorage.getItem("token") || null,
     isAuthenticated: !!localStorage.getItem("token"),
   
@@ -27,7 +28,8 @@ export const useAuthStore = create<AuthState>((set) => ({
     checkAuth: () => {
       const token = localStorage.getItem("token");
       set({ token, isAuthenticated: !!token });
-    }
+    },
+    getAuthState: () => get(),
   }));
   
 

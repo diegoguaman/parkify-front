@@ -12,11 +12,12 @@ interface ParkingState {
       //action
     //permite la actualizacion de los campos que se desean modificar podiendo dejar  otros campos vacios
       setParkingData: (data: Partial<Omit<ParkingState, 'setParkingData'>>) => void;
+      getParkingData: () => ParkingState;
   }
 
 
 
-export const useParkingStore = create<ParkingState>((set) => ({
+export const useParkingStore = create<ParkingState>((set, get) => ({
     id: '',
     name: '',
     address: '',
@@ -25,4 +26,5 @@ export const useParkingStore = create<ParkingState>((set) => ({
     totalCapacity: 0,
     availableSpots: 0,
     setParkingData: (data) => set((state) => ({ ...state, ...data })),
+    getParkingData: () => get(),
   }));
