@@ -56,16 +56,6 @@ const Header: React.FC = () => {
       menuIcon: <AccountCircleOutlinedIcon />,
     },
   ]
-  
-  // this is just for testing purposes remove it later !!!!!!!!!!!!
-  const testChangeUser = () => {
-    setCurrentUserType(prev => {
-      if (prev === 'landing') return 'OwnerNotLogged';
-      if (prev === 'OwnerNotLogged') return 'OwnerLogged';
-      return 'landing';
-    });
-  }
-  // this is just for testing purposes remove it later !!!!!!!!!!!!
 
   // Get the current user configuration
   const currentUserConfig = authenticatedButton.find(user => user.user === currentUserType) || authenticatedButton[0];
@@ -78,7 +68,6 @@ const Header: React.FC = () => {
   // Handle menu close
   const handleMenuClose = () => {
     setAnchorEl(null);
-    testChangeUser(); // this is just for testing purposes remove it later !!!!!!!!!!!!
   };
 
   return (
