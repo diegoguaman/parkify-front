@@ -11,14 +11,12 @@ export const FooterWrapper = styled(Box)(({ theme }) => ({
 export const LogoImage = styled("img")({
   width: 120,
   height: "auto",
-  marginBottom: 24,
 });
 
 export const SocialIcons = styled(Box)({
   display: "flex",
   gap: 16,
-  justifyContent: "center",
-  marginBottom: 24,
+  justifyContent: "left",
 });
 
 export const SocialButton = styled(IconButton)(({theme}) => ({
@@ -34,11 +32,12 @@ export const LinkGroup = styled(Box)({
 
 export const FooterLink = styled(Link)(({ theme }) => ({
   textDecoration: "none",
-  color: theme.palette.primary.main
+  color: theme.palette.common.white,
 }));
 
-export const LegalText = styled(Typography)(({ theme }) => ({
-  marginTop: 32,
-  textAlign: "left",
-  color: theme.palette.common.white, 
+export const FooterContent = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start", // todo alineado a la izquierda
+  gap: theme.spacing(2),    // misma separación para todos los elementos del footer
 }));
