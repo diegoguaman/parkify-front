@@ -1,6 +1,5 @@
 import styles from "../Auth.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import { Box, Button, Link, Typography } from "@mui/material";
 import InputForm from "../components/InputForm";
@@ -34,7 +33,11 @@ const RegisterPage: React.FC = () => {
     console.log(data)
   };
   return (
-    <AuthLayout>
+    <AuthLayout 
+      title="Regístrate" 
+      register="Crea tu cuenta para que tu estacionamemiento sea visible."
+      google="Registrate"
+      >
       <Box component="form"
         noValidate
         onSubmit={handleSubmit(onSubmit)} className={styles.registerForm}>
@@ -90,7 +93,6 @@ const RegisterPage: React.FC = () => {
           type="submit"
           fullWidth
           sx={{ mt: 2 }}
-          endIcon={<KeyboardArrowRightIcon />}
         >
           Continuar
         </Button>

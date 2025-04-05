@@ -1,52 +1,70 @@
 import styles from "../Auth.module.css";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import { Box, Button, Divider, Typography } from "@mui/material";
+import { Box, Button, Divider, Link, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import { GoogleIcon } from "./GoogleIcon";
 import { grey } from "@mui/material/colors";
 
 import { ReactNode } from "react";
+import HeaderForm from "./HeaderForm";
 
-type AuthLayoutProps ={
-    children: ReactNode;
-  }
+type AuthLayoutProps = {
+  children: ReactNode;
+  title: string;
+  register?: string;
+  login?: {
+    show: boolean;
+    description: string;
+    link: string;
+  };
+  google: string
+};
 
-const AuthLayout = ({children} : AuthLayoutProps ) => {
+const AuthLayout = ({ children, title, register, login, google }: AuthLayoutProps) => {
   return (
     <>
-      <Box
-        sx={{
-          pl: 4,
-          boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)",
-          height: 56,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "flex-start",
-        }}
-      >
-        <Button startIcon={<KeyboardArrowLeftIcon />}>Volver</Button>
-      </Box>
+      <HeaderForm/>
       <Box sx={{ px: 2 }}>
         <Box className={styles.registerForm}>
           <Box
             component="img"
             src="/logoParkifyRegisterForm.svg"
             alt="Logo"
-            sx={{ width: 100, height: "auto", mb: 4 }}
+            sx={{ width: 100, height: "auto", mb: 3 }}
           />
           <Typography
             component="h1"
             variant="h2"
-            sx={{ fontWeight: "bold", mb: 1 }}
+            sx={{ fontWeight: 600}}
           >
-            Regístrate
+            {title}
           </Typography>
-          <Typography component="h2" variant="body2">
-            Crea tu cuenta para que tu estacionamemiento sea visible
-          </Typography>
+          {register && (
+            <Typography component="h2" variant="body2">
+              {register}
+            </Typography>
+          )}
+          {login?.show && (
+            <Typography component="h2" variant="body2">
+              {login.description}{" "}
+             
+              <Link
+                component={RouterLink}
+                to="/register"
+                sx={{
+                  color: "black !important",
+                  fontWeight: "bold",
+                  textDecorationColor: "black",
+                  
+                }}
+              >
+                {login.link}
+              </Link>
+            </Typography>
+          )}
         </Box>
         {children}
 
-        <Box className={styles.registerForm} sx={{pt:0}}>
+        <Box className={styles.registerForm} sx={{ pt: 0 }}>
           <Divider
             sx={{
               fontSize: 12,
@@ -57,7 +75,7 @@ const AuthLayout = ({children} : AuthLayoutProps ) => {
               color: grey[400],
             }}
           >
-            Tambien puedes
+            También puedes
           </Divider>
           <Button
             type="submit"
@@ -69,7 +87,7 @@ const AuthLayout = ({children} : AuthLayoutProps ) => {
               fontSize: 14,
             }}
           >
-            Registrarte con Google
+            {google} con Google
           </Button>
         </Box>
       </Box>
