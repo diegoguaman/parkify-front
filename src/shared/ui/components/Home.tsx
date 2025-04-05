@@ -23,7 +23,7 @@ const Home : React.FC = () => {
       <Grid container 
       spacing={4} 
       alignItems="center"
-      mt={4} 
+      mt={4}
       >
         {/* Texto */}
         <Box item xs={12} md={6}
@@ -78,7 +78,7 @@ const Home : React.FC = () => {
         </Box>
       </Grid>
 
-      <Box sx={{ mt: 8, textAlign: "center" }}>
+      <Box sx={{ mt: 8, textAlign: "center" }} id="como-funciona">
   <Typography variant="h4" color="primary" fontWeight="bold">
     Cómo funciona
   </Typography>
@@ -105,7 +105,7 @@ const Home : React.FC = () => {
 </Box>
 
       {/* Sección Reseñas */}
-      <Box sx={{ mt: 8, textAlign: "center" }}>
+      <Box sx={{ mt: 8, textAlign: "center" }} id="reseña">
         <Typography variant="h4" color="primary" fontWeight="bold">Reseñas</Typography>
         <Grid container 
           spacing={3} 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -18,8 +19,6 @@ import ThreePOutlinedIcon from '@mui/icons-material/ThreePOutlined';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
-import Logo from "../../assets/react.svg"; // Change to new Logo path
-
 const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [currentUserType, setCurrentUserType] = useState<'landing' | 'OwnerNotLogged' | 'OwnerLogged'>('landing');
@@ -31,27 +30,27 @@ const Header: React.FC = () => {
     {
       user: "landing",
       buttons: [
-        { label: "Inicio", icon: <HomeOutlinedIcon /> },
-        { label: "Panel de control", icon: <ManageAccountsOutlinedIcon /> },
-        { label: "Mis estacionamientos", icon: <NoCrashOutlinedIcon /> },
-        { label: "Salir", icon: <LogoutOutlinedIcon />, variant: "outlined" },
+        { label: "Como funciona", icon: <HomeOutlinedIcon />, variant: "text", sectionId: "como-funciona", path: "/" },
+        { label: "Reseña", icon: <NoCrashOutlinedIcon /> , variant: "text", sectionId: "reseña", path: "/" },
+        { label: "Conectemos", icon: <LogoutOutlinedIcon />, variant: "text", sectionId: "conectemos", path: "/" },
+        { label: "Panel de control", icon: <ManageAccountsOutlinedIcon />, variant: "outlined", path: "/register" },
       ],
       menuIcon: <MenuIcon />,
     },
     {
       user: "OwnerNotLogged",
       buttons: [
-        { label: "Cómo funciona", icon: <QuestionMarkOutlinedIcon /> },
-        { label: "Reseña", icon: <ThreePOutlinedIcon /> },
-        { label: "Seguinos", icon: <LanguageOutlinedIcon /> }
+        { label: "Cómo funciona", icon: <QuestionMarkOutlinedIcon />, variant: "text", path: "/" },
+        { label: "Reseña", icon: <ThreePOutlinedIcon />, variant: "text", path: "/" },
+        { label: "Seguinos", icon: <LanguageOutlinedIcon />, variant: "text", path: "/" }
       ],
       menuIcon: <MenuIcon />,
     },
     {
       user: "OwnerLogged",
       buttons: [
-        { label: "Mi cuenta", icon: <ManageAccountsOutlinedIcon /> },
-        { label: "Cerrar Sesión", icon: <LogoutOutlinedIcon />, color: "error.main" },
+        { label: "Mi cuenta", icon: <ManageAccountsOutlinedIcon />, variant: "text", path: "/" },
+        { label: "Cerrar Sesión", icon: <LogoutOutlinedIcon />, color: "error.main", variant: "text", path: "/" },
       ],
       menuIcon: <AccountCircleOutlinedIcon />,
     },
@@ -70,12 +69,47 @@ const Header: React.FC = () => {
     setAnchorEl(null);
   };
 
+  // Scroll to Section in LandingPage 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      })
+    }
+    
+    if (isMobile) {
+      handleMenuClose();
+    }
+  }
+
   return (
     <AppBar position="static">
     <Toolbar >
+    <Box 
+      sx={{ 
+        flexGrow: 1,
+        maxWidth: 1152,
+        width: "100%",
+        mx: "auto",
+        px: 2,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+       }}>
       {/* Logo */}
-      <Box sx={{ flexGrow: 1 }}>
-        <img src={Logo} alt="Parkify logo"/>
+      <Box 
+        component={Link}
+        to={'/'}
+        sx={{ flexGrow: 1 }}
+      >
+        <Box 
+          component="img"
+          src="/logoParkifyLightHeader.svg"
+          alt="Logo"
+          sx={{ width: 140, height: "auto", pt: 2 }}
+        />
       </Box>
 
       {/* Buttons */}
@@ -100,7 +134,9 @@ const Header: React.FC = () => {
             { currentUserConfig.buttons.map((button) => (
               <MenuItem 
                 key={button.label} 
-                onClick={handleMenuClose}
+                onClick={() => scrollToSection(button.sectionId!)}
+                component={Link}
+                to={button.path || "/"}
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
@@ -126,15 +162,21 @@ const Header: React.FC = () => {
           { currentUserConfig.buttons.map((button) => (
             <Button 
               key={button.label}
-              variant={button.variant || "text"}
+              component={Link}
+              onClick={() => scrollToSection(button.sectionId!)}
+              to={button.path || "/"}
+              sx={{
+                color: button.color || "inherit",
+                variant: button.variant || "text",
+              }}
             >
               {button.label}
             </Button>
           ))}
         </Box>
       )
-
       )}
+      </Box>
     </Toolbar>
   </AppBar>
   );
