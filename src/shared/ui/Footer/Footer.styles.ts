@@ -2,8 +2,8 @@ import { styled } from "@mui/material/styles";
 import { Box, IconButton, Link, Typography } from "@mui/material";
 
 export const FooterWrapper = styled(Box)(({ theme }) => ({
-  backgroundColor: "#3445C5",
-  color: "#FFFFFF",
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.common.white,
   padding: theme.spacing(4, 0),
   marginTop: "auto",
 }));
@@ -21,9 +21,9 @@ export const SocialIcons = styled(Box)({
   marginBottom: 24,
 });
 
-export const SocialButton = styled(IconButton)({
-  color: "#FFFFFF",
-});
+export const SocialButton = styled(IconButton)(({theme}) => ({
+  color: theme.palette.common.white,
+}));
 
 export const LinkGroup = styled(Box)({
   display: "flex",
@@ -32,14 +32,13 @@ export const LinkGroup = styled(Box)({
   marginTop: 16,
 });
 
-export const FooterLink = styled(Link)({
+export const FooterLink = styled(Link)(({ theme }) => ({
   textDecoration: "none",
-  color: "inherit",
-});
+  color: theme.palette.primary.main
+}));
 
-export const LegalText = styled(Typography)({
+export const LegalText = styled(Typography)(({ theme }) => ({
   marginTop: 32,
-  fontSize: 12,
   textAlign: "left",
-  color: "#FFFFFF",
-});
+  color: theme.palette.common.white, 
+}));

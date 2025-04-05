@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { Instagram, YouTube, LinkedIn,} from "@mui/icons-material";
 import twitterLogo from "../../../assets/logo/logo-twitter.svg"
 import logoParkify from "../../../assets/logo/logo-blanco.svg"
@@ -33,16 +33,21 @@ const Footer: React.FC = () => {
           </SocialButton>
         </SocialIcons>
 
-        <FooterLink href="mailto:consultas@parkify.com">
-          consultas@parkify.com
-        </FooterLink>
-
+        <Typography variant="body2">
+          <FooterLink href="#">Sobre nosotros</FooterLink>
+        </Typography>
+        
         <LinkGroup>
-          <FooterLink href="#sobre-nosotros">Sobre nosotros</FooterLink>
-          <FooterLink href="#terminos-y-condiciones">Términos y condiciones</FooterLink>
+          <Typography variant="body2">
+            <FooterLink href="#sobre-nosotros">Sobre nosotros</FooterLink>
+          </Typography>
+          <Typography variant="body2">
+            <FooterLink href="#terminos-y-condiciones">Términos y condiciones</FooterLink>
+          </Typography>
         </LinkGroup>
 
-        <LegalText>
+
+        <LegalText variant="caption">
           © Parkify {new Date().getFullYear()} 
         </LegalText>
 
