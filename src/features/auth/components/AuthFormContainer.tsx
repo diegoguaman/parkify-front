@@ -4,20 +4,10 @@ import { Link as RouterLink } from "react-router-dom";
 import { GoogleIcon } from "./GoogleIcon";
 import { grey } from "@mui/material/colors";
 import logo from "../../../assets/logo/logo-imagotipo-azul.svg"
-import { ReactNode } from "react";
 import HeaderForm from "./HeaderForm";
+import { AuthLayoutProps } from "../types";
 
-type AuthLayoutProps = {
-  children: ReactNode;
-  title: string;
-  register?: string;
-  login?: {
-    show: boolean;
-    description: string;
-    link: string;
-  };
-  google: string
-};
+
 
 const AuthLayout = ({ children, title, register, login, google }: AuthLayoutProps) => {
   return (

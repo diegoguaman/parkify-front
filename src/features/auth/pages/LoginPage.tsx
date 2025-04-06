@@ -1,17 +1,14 @@
 import styles from "../Auth.module.css";
-import { Box, Button, Link, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../schemas/loginSchema";
 import InputForm from "../components/InputForm";
 import AuthFormContainer from "../components/AuthFormContainer";
+import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
+import { LoginFormValues } from "../types";
 
-
-interface LoginFormValues {
-    email: string
-    password: string
-}
 
 const LoginPage = () => {
     
@@ -55,27 +52,20 @@ const LoginPage = () => {
           register={register}
           error={errors.password}
         />
-        <Typography component="h2" variant="body2" sx={{mt:1}}>
+        <Typography component="h2" variant="body2" sx={{my:1}}>
              
               <Link
                 component={RouterLink}
                 to="/"
                 sx={{
                   color: "black !important",
-                  textDecorationColor: "black",
+                  textDecorationColor: "black"
                 }}
               >
                 ¿Has olvidado tu contraseña?
               </Link>
         </Typography>
-        <Button
-          variant="contained"
-          type="submit"
-          fullWidth
-          sx={{ mt: 1 }}
-        >
-          Continuar
-        </Button>
+        <ButtonPrimary text="Continuar"/>
       </Box>
     </AuthFormContainer>
   );
