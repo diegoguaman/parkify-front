@@ -1,23 +1,23 @@
 import styles from "../Auth.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, Link, Typography } from "@mui/material";
+import { Box, Link, Typography } from "@mui/material";
 import InputForm from "../components/InputForm";
 import { useForm } from "react-hook-form";
-import { parkingSchema } from "../schemas/parckingSchema";
+import { parkingSchema } from "../schemas/parkingSchema";
 import { grey } from "@mui/material/colors";
 import AuthFormContainer from "../components/AuthFormContainer";
+import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
+import { FieldsType, ParkingFormValues } from "../types";
 
-type ParkingFormValues = {
-  parckingName: string;
-  parckingAddress: string;
-  parckingPhone: string;
-  parckingRate: number;
-  parckingCapacity: number;
-};
-
+const fields: FieldsType[] = [
+  { name: "parkingName", placeholder: "Nombre del estacionamiento", type: "text",},
+  { name: "parkingAddress", placeholder: "Dirección del estacionamiento", type: "text",},
+  { name: "parkingPhone", placeholder: "Número de contacto", type: "text" },
+  { name: "parkingRate", placeholder: "$ Tarifa por hora", type: "number" },
+  { name: "parkingCapacity", placeholder: "Cantidad de plazas disponibles", type: "number",},
+];
 
 const RegisterPage: React.FC = () => {
-  
   const {
     register,
     handleSubmit,
@@ -26,56 +26,34 @@ const RegisterPage: React.FC = () => {
   } = useForm<ParkingFormValues>({
     resolver: yupResolver(parkingSchema),
   });
-  const onSubmit = (data: any) => {
-    reset()
-    alert("Estacionamiento registrado")
-    console.log(data)
+  const onSubmit = (data: ParkingFormValues) => {
+    reset();
+    alert("Estacionamiento registrado");
+    console.log(data);
   };
   return (
-    <AuthFormContainer 
-      title="Regístrate" 
+    <AuthFormContainer
+      title="Regístrate"
       register="Crea tu cuenta para que tu estacionamemiento sea visible."
       google="Registrate"
-      >
-      <Box component="form"
+    >
+      <Box
+        component="form"
         noValidate
-        onSubmit={handleSubmit(onSubmit)} className={styles.registerForm}>
-        <InputForm
-          placeholder="Nombre del estacionamiento"
-          name="parckingName"
-          type="text"
-          register={register}
-          error={errors.parckingName}
-        />
-        <InputForm
-          placeholder="Dirección del estacionamiento"
-          name="parckingAddress"
-          type="text"
-          register={register}
-          error={errors.parckingAddress}
-        />
-        <InputForm
-          placeholder="Número de contacto"
-          name="parckingPhone"
-          type="text"
-          register={register}
-          error={errors.parckingPhone}
-        />
-        <InputForm
-          placeholder="$ Tarifa por hora"
-          name="parckingRate"
-          type="number"
-          register={register}
-          error={errors.parckingRate}
-        />
-        <InputForm
-          placeholder="Cantidad de plazas disponibles"
-          name="parckingCapacity"
-          type="number"
-          register={register}
-          error={errors.parckingCapacity}
-        />
-        <Typography variant="body2" sx={{ color: grey[600], mt: 2 }}>
+        onSubmit={handleSubmit(onSubmit)}
+        className={styles.registerForm}
+      >
+        {fields.map(({ name, placeholder, type }) => (
+          <InputForm
+            key={name}
+            name={name}
+            placeholder={placeholder}
+            type={type}
+            register={register}
+            error={errors[name]}
+          />
+        ))}
+        <Typography variant="body2" sx={{ color: grey[600], my: 2 }}>
           Al continuar, aceptas los{" "}
           <Link
             href="#"
@@ -86,15 +64,7 @@ const RegisterPage: React.FC = () => {
             términos y condiciones
           </Link>
         </Typography>
-
-        <Button
-          variant="contained"
-          type="submit"
-          fullWidth
-          sx={{ mt: 2 }}
-        >
-          Continuar
-        </Button>
+        <ButtonPrimary text="Continuar" />
       </Box>
     </AuthFormContainer>
   );
