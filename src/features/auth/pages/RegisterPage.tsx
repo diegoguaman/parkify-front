@@ -1,72 +1,106 @@
 import styles from "../Auth.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Link, Typography } from "@mui/material";
-import InputForm from "../components/InputForm";
+import { Box } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { parkingSchema } from "../schemas/parkingSchema";
-import { grey } from "@mui/material/colors";
-import AuthFormContainer from "../components/AuthFormContainer";
-import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
-import { FieldsType, ParkingFormValues } from "../types";
+import {
+  FormParkingValues,
+  FormRegisterValues,
+  FormUserValues,
+  RegisterPageProps,
+} from "../types";
+import { useState } from "react";
+import ParkingRegistrationStep from "../components/ParkingRegistrationStep";
+import UserRegistrationStep from "../components/UserRegistrationStep";
+import {
+  registerParkingSchema,
+  registerUserSchema,
+} from "../schemas/registerSchema";
+import HeaderForm from "../components/HeaderForm";
 
-const fields: FieldsType[] = [
-  { name: "parkingName", placeholder: "Nombre del estacionamiento", type: "text",},
-  { name: "parkingAddress", placeholder: "Dirección del estacionamiento", type: "text",},
-  { name: "parkingPhone", placeholder: "Número de contacto", type: "text" },
-  { name: "parkingRate", placeholder: "$ Tarifa por hora", type: "number" },
-  { name: "parkingCapacity", placeholder: "Cantidad de plazas disponibles", type: "number",},
-];
+const RegisterPage = ({ step, setStep, context }: RegisterPageProps) => {
+  const [isCheckingEmail, setIsCheckingEmail] = useState(false);
+  // const [step, setStep] = useState(0);
 
-const RegisterPage: React.FC = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<ParkingFormValues>({
-    resolver: yupResolver(parkingSchema),
+  const userForm = useForm<FormUserValues>({
+    resolver: yupResolver(registerUserSchema),
   });
-  const onSubmit = (data: ParkingFormValues) => {
-    reset();
+
+  const parkingForm = useForm<FormParkingValues>({
+    resolver: yupResolver(registerParkingSchema),
+  });
+
+  const onSubmitParking = (data: FormParkingValues) => {
+    const combinedData: FormRegisterValues = {
+      ...userForm.getValues(), // datos del paso 1
+      ...data,                 // datos del paso 2
+    };
+  
+    console.log("Datos combinados:", combinedData);
+    userForm.reset();
+    parkingForm.reset();
     alert("Estacionamiento registrado");
-    console.log(data);
   };
+  const checkEmail = async (data: FormUserValues) => {
+    console.log("hola");
+    try {
+      setIsCheckingEmail(true);
+      //chequear q el email no existe antes de pasar al 2do paso
+      // const response = await fetch("/api/check-email", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ email: data.email }),
+      // });
+      // const result = await response.json();
+      //simula llamado a back
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const result = false;
+
+      if (result) {
+        userForm.setError("email", {
+          type: "manual",
+          message: "Este email ya está registrado",
+        });
+        return;
+      }
+
+      setStep(1);
+    } catch (error) {
+      console.error("Error al verificar el email:", error);
+    } finally {
+      setIsCheckingEmail(false);
+    }
+  };
+
   return (
-    <AuthFormContainer
-      title="Regístrate"
-      register="Crea tu cuenta para que tu estacionamemiento sea visible."
-      google="Registrate"
+    <>
+     <HeaderForm onBack={context.onBack} />
+    <Box
+      component="form"
+      noValidate
+      onSubmit={
+        step === 0
+          ? userForm.handleSubmit(checkEmail)
+          : parkingForm.handleSubmit(onSubmitParking)
+      }
+      className={styles.registerForm}
     >
-      <Box
-        component="form"
-        noValidate
-        onSubmit={handleSubmit(onSubmit)}
-        className={styles.registerForm}
-      >
-        {fields.map(({ name, placeholder, type }) => (
-          <InputForm
-            key={name}
-            name={name}
-            placeholder={placeholder}
-            type={type}
-            register={register}
-            error={errors[name]}
-          />
-        ))}
-        <Typography variant="body2" sx={{ color: grey[600], my: 2 }}>
-          Al continuar, aceptas los{" "}
-          <Link
-            href="#"
-            target="_blank"
-            rel="noopener"
-            sx={{ color: grey[600], textDecorationColor: "black" }}
-          >
-            términos y condiciones
-          </Link>
-        </Typography>
-        <ButtonPrimary text="Continuar" />
-      </Box>
-    </AuthFormContainer>
+      {step === 0 && (
+        <UserRegistrationStep
+          register={userForm.register}
+          errors={userForm.formState.errors}
+          handleNext={userForm.handleSubmit(checkEmail)}
+          isCheckingEmail={isCheckingEmail}
+        />
+      )}
+      {step === 1 && (
+        <ParkingRegistrationStep
+          register={parkingForm.register}
+          errors={parkingForm.formState.errors}
+          onBack={() => setStep(0)}
+        />
+      )}
+    </Box>
+    </>
   );
 };
 

@@ -4,22 +4,21 @@ import { Link as RouterLink } from "react-router-dom";
 import { GoogleIcon } from "./GoogleIcon";
 import { grey } from "@mui/material/colors";
 import logo from "../../../assets/logo/logo-imagotipo-azul.svg"
-import HeaderForm from "./HeaderForm";
-import { AuthLayoutProps } from "../types";
+import { AuthFormContainerProps } from "../types";
 
 
 
-const AuthLayout = ({ children, title, register, login, google }: AuthLayoutProps) => {
+const AuthFormContainer = ({ children, title, register, login, google }: AuthFormContainerProps) => {
   return (
     <>
-      <HeaderForm/>
+      
       <Box sx={{ px: 2 }}>
         <Box className={styles.registerForm}>
           <Box
             component="img"
             src={logo}
             alt="Logo"
-            sx={{ width: 100, height: "auto", mb: 3 }}
+            sx={{ width: 100, height: "auto", my: 4 }}
           />
           <Typography
             component="h1"
@@ -85,4 +84,4 @@ const AuthLayout = ({ children, title, register, login, google }: AuthLayoutProp
   );
 };
 
-export default AuthLayout;
+export default AuthFormContainer;

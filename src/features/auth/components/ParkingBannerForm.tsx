@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material'
 import banner from "../../../assets/Banner.svg";
-const ParkingBannerForm = () => {
+
+const ParkingBannerForm: React.FC = () => {
   return (
     <Box
     sx={{

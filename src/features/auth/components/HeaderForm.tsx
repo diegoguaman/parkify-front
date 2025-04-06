@@ -1,9 +1,10 @@
 import { Box, Button } from "@mui/material"
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { Link as RouterLink } from "react-router-dom";
+import { HeaderFormProps } from "../types";
 
 
-const HeaderForm : React.FC = () => {
+const HeaderForm  = ({path, onBack}: HeaderFormProps) => {
   return (
     <Box
         sx={{
@@ -13,14 +14,21 @@ const HeaderForm : React.FC = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "flex-start",
-          marginBottom: 4
         }}
       >
+        {onBack ? (
+        <Button startIcon={<KeyboardArrowLeftIcon />} onClick={onBack}>
+          Volver
+        </Button>
+      ) : (
         <Button
-          component={RouterLink} 
-          startIcon={<KeyboardArrowLeftIcon />} 
-          to="/"
-        >Volver</Button>
+          component={RouterLink}
+          startIcon={<KeyboardArrowLeftIcon />}
+          to={path || "/"}
+        >
+          Volver
+        </Button>
+      )}
       </Box>
   )
 }
