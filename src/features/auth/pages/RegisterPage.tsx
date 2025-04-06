@@ -16,8 +16,10 @@ import {
   registerUserSchema,
 } from "../schemas/registerSchema";
 import HeaderForm from "../components/HeaderForm";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = ({ step, setStep, context }: RegisterPageProps) => {
+  const navigate = useNavigate();
   const [isCheckingEmail, setIsCheckingEmail] = useState(false);
   // const [step, setStep] = useState(0);
 
@@ -31,14 +33,17 @@ const RegisterPage = ({ step, setStep, context }: RegisterPageProps) => {
 
   const onSubmitParking = (data: FormParkingValues) => {
     const combinedData: FormRegisterValues = {
-      ...userForm.getValues(), // datos del paso 1
-      ...data,                 // datos del paso 2
+      ...userForm.getValues(),
+      ...data,
     };
-  
-    console.log("Datos combinados:", combinedData);
+
+    const clonedData = JSON.parse(JSON.stringify(combinedData));
+
+    console.log("Datos combinados:", clonedData);
     userForm.reset();
     parkingForm.reset();
     alert("Estacionamiento registrado");
+    navigate("/");
   };
   const checkEmail = async (data: FormUserValues) => {
     console.log("hola");
@@ -73,33 +78,33 @@ const RegisterPage = ({ step, setStep, context }: RegisterPageProps) => {
 
   return (
     <>
-     <HeaderForm onBack={context.onBack} />
-    <Box
-      component="form"
-      noValidate
-      onSubmit={
-        step === 0
-          ? userForm.handleSubmit(checkEmail)
-          : parkingForm.handleSubmit(onSubmitParking)
-      }
-      className={styles.registerForm}
-    >
-      {step === 0 && (
-        <UserRegistrationStep
-          register={userForm.register}
-          errors={userForm.formState.errors}
-          handleNext={userForm.handleSubmit(checkEmail)}
-          isCheckingEmail={isCheckingEmail}
-        />
-      )}
-      {step === 1 && (
-        <ParkingRegistrationStep
-          register={parkingForm.register}
-          errors={parkingForm.formState.errors}
-          onBack={() => setStep(0)}
-        />
-      )}
-    </Box>
+      <HeaderForm onBack={context.onBack} />
+      <Box
+        component="form"
+        noValidate
+        onSubmit={
+          step === 0
+            ? userForm.handleSubmit(checkEmail)
+            : parkingForm.handleSubmit(onSubmitParking)
+        }
+        className={styles.registerForm}
+      >
+        {step === 0 && (
+          <UserRegistrationStep
+            register={userForm.register}
+            errors={userForm.formState.errors}
+            handleNext={userForm.handleSubmit(checkEmail)}
+            isCheckingEmail={isCheckingEmail}
+          />
+        )}
+        {step === 1 && (
+          <ParkingRegistrationStep
+            register={parkingForm.register}
+            errors={parkingForm.formState.errors}
+            onBack={() => setStep(0)}
+          />
+        )}
+      </Box>
     </>
   );
 };
