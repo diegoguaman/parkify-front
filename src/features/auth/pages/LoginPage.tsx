@@ -1,6 +1,6 @@
 import styles from "../Auth.module.css";
 import { Box, Link, Typography } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../schemas/loginSchema";
@@ -9,8 +9,12 @@ import AuthFormContainer from "../components/AuthFormContainer";
 import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
 import { FormValues } from "../types";
 import HeaderForm from "../components/HeaderForm";
+import authService from "../services/AuthService";
+import { useAuthStore } from "../../../store/auth.store";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const {login} = useAuthStore()
   const {
     register,
     handleSubmit,
@@ -19,10 +23,18 @@ const LoginPage = () => {
   } = useForm<FormValues>({
     resolver: yupResolver(loginSchema),
   });
-  const onSubmit = (data: any) => {
-    console.log(data);
-    reset();
-    alert("Estacionamiento registrado");
+  const onSubmit = async (data: FormValues) => {
+    const token = await authService.login(data.email, data.password)
+    if (token) {
+      login(token)
+      reset();
+      alert("Estacionamiento registrado");
+      navigate("/");
+    } else {
+      //podria devolver usuario inexistemte
+      //contrasenña invalida
+    }
+    
     
   };
   const log = {

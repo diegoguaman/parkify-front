@@ -21,6 +21,13 @@ export const registerUserSchema  = yup.object().shape({
   });
 
   export const registerParkingSchema = yup.object().shape({
+    email: yup
+    .string()
+    .required("El email es obligatorio")
+    .matches(
+      /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
+      "Ingresá un email válido"
+    ),
     totalSpots: yup
     .number()
     .typeError("Debe ser un número")

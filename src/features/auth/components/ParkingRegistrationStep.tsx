@@ -6,6 +6,7 @@ import ButtonSecondary from "../../../shared/ui/components/ButtonSecondary";
 import ParkingBannerForm from "./ParkingBannerForm";
 
 const fields: FieldsType[] = [
+  { name: "email", label: "tuemail@gmail.com", type: "email" },
   { name: "totalSpots", label: "Plazas totales", type: "number" },
   { name: "availableSpots", label: "Plazas disponibles", type: "number" },
   { name: "hourlyRate", label: "Tarifa por hora", type: "number" },
@@ -45,11 +46,6 @@ const ParkingRegistrationStep = ({ register, errors }: ParkingFormProps) => {
                       InputLabelProps={
                         type === "time" ? { shrink: true } : undefined
                       }
-                      sx={{
-                        "& .MuiInputBase-input": {
-                          padding: "12px",
-                        },
-                      }}
                       fullWidth
                     />
                   )
@@ -72,27 +68,10 @@ const ParkingRegistrationStep = ({ register, errors }: ParkingFormProps) => {
               error={!!errors[name as keyof FormParkingValues]}
               helperText={errors[name as keyof FormParkingValues]?.message}
               fullWidth
-              sx={{
-                "& .MuiInputBase-input": {
-                  padding: "12px",
-                },
-              }}
+            
             />
           );
         })}
-        {/* {fields.map(({ name, label, type }) => (
-            <TextField
-            key={name}
-            {...register(name as keyof FormParkingValues)}
-            name={name}
-            label={label}
-            type={type}
-            error={!!errors[name as keyof FormParkingValues]}
-            helperText={errors[name as keyof FormParkingValues]?.message}
-            InputLabelProps={type === "time" ? { shrink: true } : undefined}
-            fullWidth
-            />
-          ))} */}
       </Box>
       <Box className={styles.registerForm}>
         <ButtonPrimary text="Guardar cambios" type="submit" />
