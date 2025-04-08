@@ -4,7 +4,7 @@ import ParkingDataFields from "../../../shared/ui/components/ParkingDataFields";
 import { FormParkingValues } from "../../auth/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerParkingSchema } from "../../auth/schemas/registerSchema";
-import HeaderForm from "../../auth/components/HeaderForm";
+
 import ParkingBannerForm from "../../../shared/ui/components/ParkingBannerForm";
 import { Box } from "@mui/material";
 import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
@@ -13,6 +13,7 @@ import ButtonDangerPrimary from "../../../shared/ui/components/ButtonDangerPrima
 import ButtonDangerSecondary from "../../../shared/ui/components/ButtonDangerSecondary";
 import { showSuccess } from "../../../shared/ui/toast";
 import { useModalStore } from "../../../store/modal.store";
+import HeaderForm from "../../../shared/ui/components/HeaderForm";
 
 
 const PerfilOwnerPage = () => {

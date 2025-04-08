@@ -15,9 +15,10 @@ import {
   registerParkingSchema,
   registerUserSchema,
 } from "../schemas/registerSchema";
-import HeaderForm from "../components/HeaderForm";
+
 import { useNavigate } from "react-router-dom";
 import { showSuccess } from "../../../shared/ui/toast";
+import HeaderForm from "../../../shared/ui/components/HeaderForm";
 
 const RegisterPage = ({ step, setStep, context }: RegisterPageProps) => {
   const navigate = useNavigate();
