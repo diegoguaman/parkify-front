@@ -1,10 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
 import PublicLayout from '../layouts/PublicLayout';
 import HomePage from '../features/parkings/pages/HomePage';
-import RegisterPage from '../features/auth/pages/RegisterPage';
 import LoginPage from '../features/auth/pages/LoginPage'
 import LayoutAuth from '../layouts/LayoutAuth';
 import RegisterPageWrapper from '../features/auth/pages/RegisterPageWrapper';
+import PerfilOwnerPage from '../features/parkings/pages/PerfilOwnerPage';
+import ChangePasswordPage from '../features/parkings/pages/ChangePasswordPage';
+import DeleteAccountPage from '../features/parkings/pages/DeleteAccountPage';
+
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +23,9 @@ export const router = createBrowserRouter([
     element: <PublicLayout />,
     children: [
       { index: true, element: <HomePage /> },
+      { path: "perfil", element: <PerfilOwnerPage /> },
+      { path: "cambiar-password", element:<ChangePasswordPage/>},
+      { path: "eliminar-cuenta", element:<DeleteAccountPage/>}
 
     ],
   },
