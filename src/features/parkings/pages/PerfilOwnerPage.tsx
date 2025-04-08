@@ -5,7 +5,7 @@ import { FormParkingValues } from "../../auth/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerParkingSchema } from "../../auth/schemas/registerSchema";
 import HeaderForm from "../../auth/components/HeaderForm";
-import ParkingBannerForm from "../../auth/components/ParkingBannerForm";
+import ParkingBannerForm from "../../../shared/ui/components/ParkingBannerForm";
 import { Box } from "@mui/material";
 import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
 import ButtonSecondary from "../../../shared/ui/components/ButtonSecondary";
