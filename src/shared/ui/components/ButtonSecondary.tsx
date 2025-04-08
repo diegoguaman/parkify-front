@@ -1,11 +1,19 @@
-import { Button } from '@mui/material'
+import Button  from '@mui/material/Button'
+import { useNavigate } from 'react-router-dom';
 
 interface ButtonSecondaryProps {
     text: string
+    to?: string
     onClick?: () => void;
     disabled?: boolean
 }
-const ButtonSecondary = ({text, onClick, disabled} : ButtonSecondaryProps) => {
+const ButtonSecondary = ({text, onClick, disabled, to} : ButtonSecondaryProps) => {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    if (onClick) onClick()
+    if (to) navigate(to)
+  }
   return (
     <Button
         type="submit"
@@ -15,7 +23,7 @@ const ButtonSecondary = ({text, onClick, disabled} : ButtonSecondaryProps) => {
         sx={{
             fontSize: 14,
         }}
-        onClick={onClick}
+        onClick={handleClick}
         disabled={disabled}
         >
           {text}
