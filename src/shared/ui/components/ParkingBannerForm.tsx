@@ -6,36 +6,38 @@ import { useModalStore } from "../../../store/modal.store";
 import ParkingModal from "../../../features/parkings/components/ParkingModal";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import { useEffect, useRef, useState } from "react";
-import { useParkingStore } from "../../../store/parking.store";
 import { showSuccess } from "../toast";
-import { UseFormSetValue } from "react-hook-form";
+import { FieldErrors, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import { FormParkingValues } from "../../../features/auth/types";
 interface Props {
   setValue: UseFormSetValue<FormParkingValues>;
+  errors: FieldErrors<FormParkingValues>;
+  trigger: UseFormTrigger<FormParkingValues>
 }
-const ParkingBannerForm: React.FC<Props> = ({ setValue } ) => {
+const ParkingBannerForm: React.FC<Props> = ({ setValue, errors, trigger } ) => {
   const [preview, setPreview] = useState<string | null>(null);
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
 
-  // const setParkingData = useParkingStore((state) => state.setParkingData);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] ?? null;
+    setValue("imageParking", file);
+    await trigger("imageParking");
     if (file) {
+      console.log("Archivo seleccionado:", file);
       const objectUrl = URL.createObjectURL(file); // genera URL temporal
       setPreview(objectUrl);
-      setValue("imageParking", file); //crea un campo en el form
       // setParkingData({ bannerImage: file });
       showSuccess("Imagen cargada con éxito");
       closeModal();
-      console.log("Archivo cargado:", file);
       // subir imagen
+      setValue("imageParking", file);
     }
   };
   useEffect(() => {
@@ -153,6 +155,9 @@ const ParkingBannerForm: React.FC<Props> = ({ setValue } ) => {
           </IconButton>
         </Box>
       </Box>
+      <Typography color="error" variant="body1" textAlign="center" sx={{mt:1}}>
+          {errors.imageParking?.message}
+      </Typography>
     </Box>
   );
 };

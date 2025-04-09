@@ -73,12 +73,14 @@ export const registerUserSchema  = yup.object().shape({
       "El número de teléfono no es válido"
     ),
   imageParking: yup
-  .mixed()
-  .test("fileType", "Solo se permiten imágenes", (value) => {
-    const file = value as File;
-    return file && ["image/jpeg", "image/png"].includes(file.type);
-  })
-  .required("La imagen es obligatoria"),
+  .mixed<File>()
+  .nullable()
+  .test("fileType", "Debe cargar una imagen válida", (value) => {
+    return (
+      value === null ||
+      (value instanceof File && value.type.startsWith("image/"))
+    );
+  }),
   }
 
   )

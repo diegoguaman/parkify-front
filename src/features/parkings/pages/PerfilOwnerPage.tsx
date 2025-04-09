@@ -1,44 +1,67 @@
-import { useForm } from "react-hook-form";
+import { Resolver, useForm } from "react-hook-form";
 import { fields } from "../../../shared/constants/ParkingFields";
 import ParkingDataFields from "../../../shared/ui/components/ParkingDataFields";
 import { FormParkingValues } from "../../auth/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerParkingSchema } from "../../auth/schemas/registerSchema";
-
 import ParkingBannerForm from "../../../shared/ui/components/ParkingBannerForm";
 import { Box } from "@mui/material";
 import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
 import ButtonSecondary from "../../../shared/ui/components/ButtonSecondary";
 import ButtonDangerPrimary from "../../../shared/ui/components/ButtonDangerPrimary";
 import ButtonDangerSecondary from "../../../shared/ui/components/ButtonDangerSecondary";
-import { showSuccess } from "../../../shared/ui/toast";
+import { showError, showSuccess } from "../../../shared/ui/toast";
 import { useModalStore } from "../../../store/modal.store";
 import HeaderForm from "../../../shared/ui/components/HeaderForm";
 import ParkingModal from "../components/ParkingModal";
-import { useParkingStore } from "../../../store/parking.store";
+import parkingService from "../services/ParkingService";
 
+type FormValues = {
+  imageParking?: File | null;
+  email: string;
+  totalSpots: number;
+  hourlyRate: number;
+  openTime: string;
+  closeTime: string;
+  parkingName: string;
+  parkingAddress: string;
+  parkingPhone: string;
+};
 
 const PerfilOwnerPage = () => {
-  const  bannerImage= useParkingStore((state) => state.bannerImage);
-  const openModal  = useModalStore((state) => state.openModal);
- 
+  const openModal = useModalStore((state) => state.openModal);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
-  } = useForm<FormParkingValues>({
-    resolver: yupResolver(registerParkingSchema),
+    trigger
+  } = useForm<FormValues>({
+    resolver: yupResolver(registerParkingSchema) as Resolver<FormValues>,
   });
-  const onSubmit = (data: FormParkingValues) => {
-    showSuccess("Los cambios se han guardado");
-    console.log(data)
+
+  const onSubmit = async (data: FormParkingValues) => {
+    //console.log(data);
+
+    try {
+      const response = await parkingService.updateParkingProfile({
+        ...data,
+        imageParking: data.imageParking ?? null, // ya es tipo File | null
+      });
+      showSuccess(response);
+      //redirijo alguna ruta?
+    } catch (err) {
+      console.error(err);
+      showError("Hubo un error");
+    }
   };
   return (
     <div>
       <HeaderForm path="/" />
-      <ParkingBannerForm setValue={setValue} />
+      <ParkingBannerForm setValue={setValue} errors={errors} trigger={trigger}/>
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+        
         <ParkingDataFields
           fields={fields}
           register={register}
@@ -63,11 +86,11 @@ const PerfilOwnerPage = () => {
             onClick={() =>
               openModal(
                 <ParkingModal
-                text="Estás a punto de eliminar este estacionamiento"
-                buttons={[
-                  { label: "Continuar", onClick: ()=>{} },
-                  { label: "Cancelar", color: "error", onClick: ()=>{} },
-                ]}
+                  text="Estás a punto de eliminar este estacionamiento"
+                  buttons={[
+                    { label: "Continuar", onClick: () => {} },
+                    { label: "Cancelar", color: "error", onClick: () => {} },
+                  ]}
                 />
               )
             }
@@ -75,6 +98,7 @@ const PerfilOwnerPage = () => {
           <ButtonDangerSecondary text="Eliminar cuenta" to="/eliminar-cuenta" />
         </Box>
       </Box>
+
     </div>
   );
 };
