@@ -1,35 +1,17 @@
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-import { mockParkings } from '../data/mock-parkings';
-import { useParkingStore } from '../store/parkingStore';
+import { GoogleMap } from '@react-google-maps/api';
+import { useUserLocationStore } from '../store/userLocation.store';
+import { MarkerList } from './MarkerList';
 
-const containerStyle = {
-  width: '100%',
-  height: '100vh',
-};
-
-const center = {
-  lat: 40.4168,
-  lng: -3.7038,
-};
+const containerStyle = { width: '100%', height: '100vh' };
 
 export const MapView = () => {
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-  });
+  const location = useUserLocationStore((s) => s.location);
 
-  const setSelected = useParkingStore((state) => state.setSelected);
-
-  if (!isLoaded) return <p>Cargando mapa...</p>;
+  if (!location) return <p>Cargando ubicación...</p>;
 
   return (
-    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14}>
-      {mockParkings.map((parking) => (
-        <Marker
-          key={parking.id}
-          position={{ lat: parking.lat, lng: parking.lng }}
-          onClick={() => setSelected(parking)}
-        />
-      ))}
+    <GoogleMap center={location} zoom={15} mapContainerStyle={containerStyle}>
+      <MarkerList />
     </GoogleMap>
   );
 };
