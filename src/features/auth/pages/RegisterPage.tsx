@@ -1,4 +1,4 @@
-import styles from "../Auth.module.css";
+import styles from "../../../shared/styles/ParkingForm.module.css";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/material";
 import { useForm } from "react-hook-form";
@@ -15,8 +15,10 @@ import {
   registerParkingSchema,
   registerUserSchema,
 } from "../schemas/registerSchema";
-import HeaderForm from "../components/HeaderForm";
+
 import { useNavigate } from "react-router-dom";
+import { showSuccess } from "../../../shared/ui/toast";
+import HeaderForm from "../../../shared/ui/components/HeaderForm";
 
 const RegisterPage = ({ step, setStep, context }: RegisterPageProps) => {
   const navigate = useNavigate();
@@ -42,11 +44,11 @@ const RegisterPage = ({ step, setStep, context }: RegisterPageProps) => {
     console.log("Datos combinados:", clonedData);
     userForm.reset();
     parkingForm.reset();
-    alert("Estacionamiento registrado");
-    navigate("/");
+    showSuccess("Estacionamiento Registrado")
+    navigate("/login");
   };
   const checkEmail = async (data: FormUserValues) => {
-    console.log("hola");
+    console.log(data);
     try {
       setIsCheckingEmail(true);
       //chequear q el email no existe antes de pasar al 2do paso

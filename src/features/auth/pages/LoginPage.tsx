@@ -1,16 +1,19 @@
-import styles from "../Auth.module.css";
+import styles from "../../../shared/styles/ParkingForm.module.css";
 import { Box, Link, Typography } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../schemas/loginSchema";
-import InputForm from "../components/InputForm";
+
 import AuthFormContainer from "../components/AuthFormContainer";
 import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
 import { FormValues } from "../types";
-import HeaderForm from "../components/HeaderForm";
+
 import authService from "../services/AuthService";
-import { useAuthStore } from "../../../store/auth.store";
+import { useAuthStore} from "../../../store/auth.store";
+import { showError, showSuccess } from "../../../shared/ui/toast";
+import HeaderForm from "../../../shared/ui/components/HeaderForm";
+import InputForm from "../../../shared/ui/components/InputForm";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -24,18 +27,17 @@ const LoginPage = () => {
     resolver: yupResolver(loginSchema),
   });
   const onSubmit = async (data: FormValues) => {
-    const token = await authService.login(data.email, data.password)
-    if (token) {
-      login(token)
-      reset();
-      alert("Estacionamiento registrado");
-      navigate("/");
-    } else {
-      //podria devolver usuario inexistemte
-      //contrasenña invalida
+    try {
+      const response = await authService.login(data.email, data.password)
+      if (response.token) {
+        login(response.token, response.user )
+        reset();
+        navigate("/");
+        showSuccess(`Bienvenido ${response.user.email}`);
+      } 
+    } catch (err) {
+      showError('Hubo un error al registrar el usuario');
     }
-    
-    
   };
   const log = {
     show: true,
