@@ -5,15 +5,20 @@ import IconButton from "@mui/material/IconButton";
 import { useModalStore } from "../../../store/modal.store";
 import ParkingModal from "../../../features/parkings/components/ParkingModal";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParkingStore } from "../../../store/parking.store";
 import { showSuccess } from "../toast";
-
-const ParkingBannerForm: React.FC = () => {
+import { UseFormSetValue } from "react-hook-form";
+import { FormParkingValues } from "../../../features/auth/types";
+interface Props {
+  setValue: UseFormSetValue<FormParkingValues>;
+}
+const ParkingBannerForm: React.FC<Props> = ({ setValue } ) => {
+  const [preview, setPreview] = useState<string | null>(null);
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
 
-  const setParkingData = useParkingStore((state) => state.setParkingData);
+  // const setParkingData = useParkingStore((state) => state.setParkingData);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUploadClick = () => {
@@ -23,14 +28,21 @@ const ParkingBannerForm: React.FC = () => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      //guardo imagen en la store
-      setParkingData({ bannerImage: file });
+      const objectUrl = URL.createObjectURL(file); // genera URL temporal
+      setPreview(objectUrl);
+      setValue("imageParking", file); //crea un campo en el form
+      // setParkingData({ bannerImage: file });
       showSuccess("Imagen cargada con éxito");
       closeModal();
       console.log("Archivo cargado:", file);
       // subir imagen
     }
   };
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
   return (
     <Box
       sx={{
@@ -58,7 +70,7 @@ const ParkingBannerForm: React.FC = () => {
       >
         <Box
           component="img"
-          src={banner}
+          src={preview || banner}
           alt="banner"
           sx={{
             width: "100%",

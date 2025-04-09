@@ -21,11 +21,12 @@ import { useParkingStore } from "../../../store/parking.store";
 const PerfilOwnerPage = () => {
   const  bannerImage= useParkingStore((state) => state.bannerImage);
   const openModal  = useModalStore((state) => state.openModal);
-  console.log(bannerImage)
+ 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<FormParkingValues>({
     resolver: yupResolver(registerParkingSchema),
   });
@@ -36,7 +37,7 @@ const PerfilOwnerPage = () => {
   return (
     <div>
       <HeaderForm path="/" />
-      <ParkingBannerForm />
+      <ParkingBannerForm setValue={setValue} />
       <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <ParkingDataFields
           fields={fields}
