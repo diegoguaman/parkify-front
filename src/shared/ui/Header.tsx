@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
@@ -17,12 +17,17 @@ import ThreePOutlinedIcon from "@mui/icons-material/ThreePOutlined";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import logoHeader from "../../assets/logo/logo-blanco.svg"
+import { useAuthStore } from "../../store/auth.store";
 
 const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Cambiar luego por lógica real
+  const isLoggedIn = useAuthStore((state) => state.isAuthenticated);
+  const logout = useAuthStore((state) => state.logout); // Solo si ya tienes una función logout
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Botones cuando no estás logueado
   const guestButtons = [
@@ -34,8 +39,8 @@ const Header: React.FC = () => {
 
   // Botones cuando estás logueado
   const loggedInButtons = [
-    { label: "Mi cuenta", icon: <ManageAccountsOutlinedIcon />, path: "/" },
-    { label: "Cerrar sesión", icon: <LogoutOutlinedIcon />, path: "/", color: "error.main" },
+    { label: "Mi cuenta", icon: <ManageAccountsOutlinedIcon />, path: "/perfil" },
+    { label: "Cerrar sesión", icon: <LogoutOutlinedIcon />, action: "logout", color: "error.main" },
   ];
 
   const buttonsToShow = isLoggedIn ? loggedInButtons : guestButtons;
@@ -48,11 +53,18 @@ const Header: React.FC = () => {
     setAnchorEl(null);
   };
 
-  const scrollToSection = (sectionId?: string) => {
-    if (sectionId) {
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
+  const handleButtonClick = (button: any) => {
+    if (button.action === "logout") {
+      logout();           
+      navigate("/");      
+    } else if (button.path) {
+      navigate(button.path); 
+    } else if (button.sectionId) {
+      if (location.pathname === "/") {
+        const el = document.getElementById(button.sectionId);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        navigate("/", { state: { scrollTo: button.sectionId } });
       }
     }
     if (isMobile) handleMenuClose();
@@ -103,9 +115,7 @@ const Header: React.FC = () => {
                 {buttonsToShow.map((button) => (
                   <MenuItem
                     key={button.label}
-                    onClick={() => scrollToSection(button.sectionId)}
-                    component={Link}
-                    to={button.path || "#"}
+                    onClick={() => handleButtonClick(button)}
                   >
                     <Box
                       sx={{
@@ -128,9 +138,7 @@ const Header: React.FC = () => {
               {buttonsToShow.map((button) => (
                 <Button
                   key={button.label}
-                  component={Link}
-                  onClick={() => scrollToSection(button.sectionId)}
-                  to={button.path || "#"}
+                  onClick={() => handleButtonClick(button)}
                   sx={{
                     color: button.color || "inherit",
                   }}
