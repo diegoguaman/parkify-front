@@ -6,8 +6,8 @@ const GlobalModal = () => {
   const { open, content, closeModal } = useModalStore();
 
   return (
-    <Dialog open={open} onClose={closeModal} maxWidth="sm" fullWidth>
-      <DialogContent>{content}</DialogContent>
+    <Dialog open={open} onClose={closeModal} maxWidth="xs" fullWidth >
+      <DialogContent sx={{px:1, pt:2, pb:2}}>{content}</DialogContent>
     </Dialog>
   );
 };
