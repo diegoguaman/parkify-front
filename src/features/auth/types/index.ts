@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { FieldError, FieldErrors, useForm, UseFormRegister } from "react-hook-form";
+import { FieldError, FieldErrors, useForm, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { registerParkingSchema, registerUserSchema } from "../schemas/registerSchema";
 import * as yup from "yup";
 export type FormValues = {
@@ -53,6 +53,7 @@ export interface ParkingFormProps  {
   register: ReturnType<typeof useForm<FormParkingValues>>["register"];
   errors: FieldErrors<FormParkingValues>;
   onBack: () => void;
+  setValue: UseFormSetValue<FormUserValues>;
   };
   
 export interface HeaderFormProps {

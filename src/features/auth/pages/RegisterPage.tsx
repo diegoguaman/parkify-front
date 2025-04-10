@@ -104,6 +104,7 @@ const RegisterPage = ({ step, setStep, context }: RegisterPageProps) => {
             register={parkingForm.register}
             errors={parkingForm.formState.errors}
             onBack={() => setStep(0)}
+            setValue={userForm.setValue}
           />
         )}
       </Box>

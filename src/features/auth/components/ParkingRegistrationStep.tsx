@@ -6,9 +6,10 @@ import ButtonSecondary from "../../../shared/ui/components/ButtonSecondary";
 import ParkingBannerForm from "../../../shared/ui/components/ParkingBannerForm";
 import ParkingDataFields from "../../../shared/ui/components/ParkingDataFields";
 import { fields } from "../../../shared/constants/ParkingFields";
+import { AddressAutocomplete } from "../../parkings/components/AddressAutocomplete";
 
 
-const ParkingRegistrationStep = ({ register, errors }: ParkingFormProps) => {
+const ParkingRegistrationStep = ({ register, errors,setValue }: ParkingFormProps) => {
   return (
     <>
       <ParkingBannerForm />
@@ -17,6 +18,8 @@ const ParkingRegistrationStep = ({ register, errors }: ParkingFormProps) => {
         register={register}
         errors={errors}
       />
+      {/* 👇 Ahora con la prop correctamente pasada */}
+      <AddressAutocomplete setValue={setValue} />
       <Box className={styles.registerForm}>
         <ButtonPrimary text="Guardar cambios" type="submit" />
         <ButtonSecondary text="Cancelar" />

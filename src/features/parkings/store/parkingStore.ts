@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { Parking } from '../types/parking';
+import { Parking } from '../../../shared/types/parking';
 
 interface ParkingStore {
   selected: Parking | null;

@@ -1,4 +1,4 @@
-import { Parking } from '../types/parking';
+import { Parking } from '../../../shared/types/parking';
 
 export const mockParkings: Parking[] = [
   {
