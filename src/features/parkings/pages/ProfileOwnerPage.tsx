@@ -29,7 +29,7 @@ type FormValues = {
   parkingPhone: string;
 };
 
-const PerfilOwnerPage = () => {
+const ProfileOwnerPage = () => {
   const openModal = useModalStore((state) => state.openModal);
   const setParkingData  = useParkingStore((state) => state.setParkingData);
   const getParkingData  = useParkingStore((state) => state.getParkingData);
@@ -119,4 +119,4 @@ const PerfilOwnerPage = () => {
   );
 };
 
-export default PerfilOwnerPage;
+export default ProfileOwnerPage;
