@@ -14,6 +14,7 @@ import TestimonialCard from "./TestimonialCard";
 import HomeCard from './HomeCard';
 import AccountCard from './AccountCard';
 import { useAuthStore } from '../../../store/auth.store';
+import ButtonHomeAction from "./ButtonHomeAction";
 
 const Home : React.FC = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
@@ -33,6 +34,7 @@ const Home : React.FC = () => {
           Parkify
         </Typography>
         <Typography variant="h5">Encuentra tu parking más cercano</Typography>
+        <ButtonHomeAction text="Buscar estacionamiento" path="/mapa" />
         <Typography sx={{ mt: 2, maxWidth: "600px", margin: "auto" }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </Typography>

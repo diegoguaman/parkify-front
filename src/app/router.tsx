@@ -9,6 +9,8 @@ import ChangePasswordPage from '../features/parkings/pages/ChangePasswordPage';
 import DeleteAccountPage from '../features/parkings/pages/DeleteAccountPage';
 import PrivateRoute from '../features/auth/components/PrivateRoute';
 import PublicOnlyRoute from '../features/auth/components/PublicOnlyRoute';
+import MapLayout from '../layouts/MapLayout';
+import MapPage from '../features/maps/pages/MapPage';
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +38,13 @@ export const router = createBrowserRouter([
           { path: "eliminar-cuenta", element: <DeleteAccountPage /> },
         ],
       },
+    ],
+  },
+  {
+    // 👉 Aquí se incluye la ruta con MapLayout
+    element: <MapLayout />,
+    children: [
+      { path: "mapa", element: <MapPage /> },
     ],
   },
 ]);
