@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
       {
         element: <PrivateRoute />,
         children: [
-          { path: "perfil", element: <PerfilOwnerPage /> },
+          { path: "profile", element: <ProfileOwnerPage /> },
           { path: "cambiar-password", element: <ChangePasswordPage /> },
           { path: "eliminar-cuenta", element: <DeleteAccountPage /> },
         ],
