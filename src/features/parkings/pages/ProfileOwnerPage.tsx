@@ -16,11 +16,15 @@ import ParkingModal from "../components/ParkingModal";
 import parkingService from "../services/ParkingService";
 import { useParkingStore } from "../../../store/parking.store";
 import { FormParkingValues } from "../../../shared/types";
+import { useAuthStore } from "../../../store/auth.store";
+import { useEffect } from "react";
 
 const ProfileOwnerPage = () => {
   const openModal = useModalStore((state) => state.openModal);
   const setParkingData  = useParkingStore((state) => state.setParkingData);
   const getParkingData  = useParkingStore((state) => state.getParkingData);
+  const userData = useAuthStore(state => state.user);
+  const parkingData = useParkingStore(state => state.getParkingData());
 
   const {
     register,
@@ -29,6 +33,7 @@ const ProfileOwnerPage = () => {
     setValue,
     trigger
   } = useForm<FormParkingValues>({
+    defaultValues:parkingData,
     resolver: yupResolver(registerParkingSchema) as Resolver<FormParkingValues>,
   });
 
@@ -38,7 +43,7 @@ const ProfileOwnerPage = () => {
     try {
       const updatedProfile = await parkingService.updateParkingProfile({
         ...data,
-        imageParking: data.imageParking ?? null, // ya es tipo File | null
+        imageParking: data.imageParking ?? null,
       });
       setParkingData({
         email: updatedProfile.email,
@@ -60,6 +65,22 @@ const ProfileOwnerPage = () => {
       showError("Hubo un error");
     }
   };
+  // useEffect(() => {
+  //   if (userData) {
+  //     setValue("email", userData.email);
+  //   }
+
+  //   if (parkingData) {
+  //     setValue("totalSpots", parkingData.totalSpots);
+  //     setValue("hourlyRate", parkingData.hourlyRate);
+  //     setValue("openTime", parkingData.openTime);
+  //     setValue("closeTime", parkingData.closeTime);
+  //     setValue("parkingName", parkingData.parkingName);
+  //     setValue("parkingAddress", parkingData.parkingAddress);
+  //     setValue("parkingPhone", parkingData.parkingPhone);
+  //     setValue("imageParking", parkingData.imageParking);
+  //   }
+  // }, [userData, parkingData, setValue]);
   return (
     <div>
       <HeaderForm path="/" />

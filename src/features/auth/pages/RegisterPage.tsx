@@ -41,6 +41,7 @@ const RegisterPage = ({ step, setStep, context }: RegisterPageProps) => {
     });
 
   const onSubmitParking = async (data: FormParkingValues) => {
+    console.log("data", data)
     const combinedData: FormRegisterValues = {
       ...userForm.getValues(),
       ...data,
@@ -61,6 +62,7 @@ const RegisterPage = ({ step, setStep, context }: RegisterPageProps) => {
         hourlyRate: parkingResponse.hourlyRate,
         openTime: parkingResponse.openTime,
         closeTime: parkingResponse.closeTime,
+        parkingName: parkingResponse.parkingName,
         parkingAddress: parkingResponse.parkingAddress,
         parkingPhone: parkingResponse.parkingPhone,
         imageParking: parkingResponse.imageParking,
