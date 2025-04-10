@@ -1,7 +1,6 @@
 import { Resolver, useForm } from "react-hook-form";
 import { fields } from "../../../shared/constants/ParkingFields";
 import ParkingDataFields from "../../../shared/ui/components/ParkingDataFields";
-import { FormParkingValues } from "../../auth/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerParkingSchema } from "../../auth/schemas/registerSchema";
 import ParkingBannerForm from "../../../shared/ui/components/ParkingBannerForm";
@@ -16,18 +15,7 @@ import HeaderForm from "../../../shared/ui/components/HeaderForm";
 import ParkingModal from "../components/ParkingModal";
 import parkingService from "../services/ParkingService";
 import { useParkingStore } from "../../../store/parking.store";
-
-type FormValues = {
-  imageParking?: File | null;
-  email: string;
-  totalSpots: number;
-  hourlyRate: number;
-  openTime: string;
-  closeTime: string;
-  parkingName: string;
-  parkingAddress: string;
-  parkingPhone: string;
-};
+import { FormParkingValues } from "../../../shared/types";
 
 const ProfileOwnerPage = () => {
   const openModal = useModalStore((state) => state.openModal);
@@ -40,8 +28,8 @@ const ProfileOwnerPage = () => {
     formState: { errors },
     setValue,
     trigger
-  } = useForm<FormValues>({
-    resolver: yupResolver(registerParkingSchema) as Resolver<FormValues>,
+  } = useForm<FormParkingValues>({
+    resolver: yupResolver(registerParkingSchema) as Resolver<FormParkingValues>,
   });
 
   const onSubmit = async (data: FormParkingValues) => {

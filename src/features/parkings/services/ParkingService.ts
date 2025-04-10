@@ -1,4 +1,5 @@
-import { FormParkingValues } from "../../auth/types";
+import { FormParkingValues } from "../../../shared/types";
+
 
 const parkingService = {
  

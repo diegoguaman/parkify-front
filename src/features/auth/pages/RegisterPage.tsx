@@ -3,7 +3,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box } from "@mui/material";
 import { Resolver, useForm } from "react-hook-form";
 import {
-  FormParkingValues,
   FormRegisterValues,
   FormUserValues,
   RegisterPageProps,
@@ -22,6 +21,7 @@ import HeaderForm from "../../../shared/ui/components/HeaderForm";
 import { useParkingStore } from "../../../store/parking.store";
 import authService from "../services/AuthService";
 import parkingService from "../../parkings/services/ParkingService";
+import { FormParkingValues } from "../../../shared/types";
 
 
 const RegisterPage = ({ step, setStep, context }: RegisterPageProps) => {

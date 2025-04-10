@@ -2,23 +2,14 @@ import { ReactNode } from "react";
 import { FieldError, FieldErrors, useForm, UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import { registerParkingSchema, registerUserSchema } from "../schemas/registerSchema";
 import * as yup from "yup";
+import { FormParkingValues } from "../../../shared/types";
 export type FormValues = {
     email: string
     password: string
 }
 
 export type FormUserValues = yup.InferType<typeof registerUserSchema>;
-export type FormParkingValues = {
-  imageParking?: File | null;
-  email: string;
-  totalSpots: number;
-  hourlyRate: number;
-  openTime: string;
-  closeTime: string;
-  parkingName: string;
-  parkingAddress: string;
-  parkingPhone: string;
-};
+
 // export type FormParkingValues = yup.InferType<typeof registerParkingSchema>;
 
 export type FormRegisterValues = FormUserValues & FormParkingValues;
