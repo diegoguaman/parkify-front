@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { FieldError, FieldErrors, useForm, UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
-import { registerParkingSchema, registerUserSchema } from "../schemas/registerSchema";
+import { registerUserSchema } from "../schemas/registerSchema";
 import * as yup from "yup";
 import { FormParkingValues } from "../../../shared/types";
 export type FormValues = {
@@ -10,25 +10,8 @@ export type FormValues = {
 
 export type FormUserValues = yup.InferType<typeof registerUserSchema>;
 
-// export type FormParkingValues = yup.InferType<typeof registerParkingSchema>;
-
 export type FormRegisterValues = FormUserValues & FormParkingValues;
-// export type FormRegisterValues = yup.InferType<typeof registerUserSchema> | yup.InferType<typeof registerParkingSchema>;
-// export type FormRegisterValues = {
-//   email: string | undefined;
-//   password: string | undefined;
-//   confirmPassword: string | undefined;
-//   totalSpots: number | undefined;
-//   availableSpots: number | undefined;
-//   hourlyRate: number | undefined;
-// };
 
-// export interface FieldsType {
-//     name: keyof FormRegisterValues;
-//     placeholder?: string;
-//     label?: string;
-//     type: string;
-// }
 export interface AuthFormContainerProps {
     children: ReactNode;
     title: string;
