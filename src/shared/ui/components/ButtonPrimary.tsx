@@ -1,23 +1,25 @@
-import  Button  from '@mui/material/Button'
+import Button from "@mui/material/Button";
 
 interface ButtonPrimaryProps {
-    text: string
-    onClick?: () => void;
-    type?: "button" | "submit" | "reset";
-    disabled?: boolean
-}
-const ButtonPrimary = ({text, onClick, type, disabled} : ButtonPrimaryProps) => {
-  return (
-    <Button
-          variant="contained"
-          type={type}
-          fullWidth
-          onClick={onClick}
-          disabled={disabled}
-        >
-          {text}
-    </Button>
-  )
+  children: React.ReactNode;
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  fullWidth?: boolean;
 }
 
-export default ButtonPrimary
+const ButtonPrimary = ({ children, onClick, type, disabled, fullWidth }: ButtonPrimaryProps) => {
+  return (
+    <Button
+      variant="contained"
+      type={type}
+      fullWidth={fullWidth}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {children}
+    </Button>
+  );
+};
+
+export default ButtonPrimary;
