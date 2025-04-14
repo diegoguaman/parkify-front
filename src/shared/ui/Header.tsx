@@ -18,6 +18,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import logoHeader from "../../assets/logo/logo-blanco.svg"
 import { useAuthStore } from "../../store/auth.store";
+import { useParkingStore } from "../../store/parking.store";
 
 type HeaderButton = {
   label: string;
@@ -32,6 +33,7 @@ const Header: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isLoggedIn = useAuthStore((state) => state.isAuthenticated);
   const logout = useAuthStore((state) => state.logout); // Solo si ya tienes una función logout
+  const clearParkingData = useParkingStore((state) => state.clearParkingData); 
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -64,7 +66,8 @@ const Header: React.FC = () => {
 
   const handleButtonClick = (button: any) => {
     if (button.action === "logout") {
-      logout();           
+      logout();   
+      clearParkingData();        
       navigate("/");      
     } else if (button.path) {
       navigate(button.path); 
