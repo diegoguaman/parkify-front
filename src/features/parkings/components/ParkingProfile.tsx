@@ -10,8 +10,8 @@ import {
 
 
 import { Parking } from "../../../shared/types/parking";
-import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+// import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
+// import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import StarIcon from "@mui/icons-material/Star"; 
 
 type ParkingProfileProps = {
@@ -107,12 +107,12 @@ export const ParkingProfile = ({ parking, onReserve }: ParkingProfileProps) => {
 
             {/* Botón */}
             <Box mt={1} display="flex" justifyContent="flex-end">
-  <ButtonPrimary onClick={onReserve}>
+  {/* <ButtonPrimary onClick={onReserve}>
     <Box display="flex" alignItems="center">
       Reservar por whatsapp
       <WhatsAppIcon sx={{ ml: 1 }} />
     </Box>
-  </ButtonPrimary>
+  </ButtonPrimary> */}
 </Box>
 
           </CardContent>
