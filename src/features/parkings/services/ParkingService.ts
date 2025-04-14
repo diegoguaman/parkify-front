@@ -81,6 +81,7 @@ const parkingService = {
     },
 
     async deleteParking (id: string) {
+      console.log(id)
       //llamada a la api delete-parking/id
       return "Parking eliminado"
     },
