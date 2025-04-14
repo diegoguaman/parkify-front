@@ -97,7 +97,7 @@ const ParkingFormContainer = ({
             <ButtonSecondary
               type="button"
               text="Cambiar contraseña"
-              to="/cambiar-password"
+              to="/change-password"
             />
             <ButtonDangerPrimary
               text="Eliminar estacionamiento"
@@ -126,7 +126,7 @@ const ParkingFormContainer = ({
             />
             <ButtonDangerSecondary
               text="Eliminar cuenta"
-              to="/eliminar-cuenta"
+              to="/delete-account"
             />
           </>
         )}

@@ -68,9 +68,9 @@ const ParkingEmptyState = () => {
         <ButtonSecondary
           type="button"
           text="Cambiar contraseña"
-          to="/cambiar-password"
+          to="/change-password"
         />
-        <ButtonDangerSecondary text="Eliminar cuenta" to="/eliminar-cuenta" />
+        <ButtonDangerSecondary text="Eliminar cuenta" to="/delete-account" />
       </Box>
     </Box>
   );

@@ -40,8 +40,8 @@ export const router = createBrowserRouter([
         element: <PrivateRoute />,
         children: [
           { path: "profile", element: <ProfileOwnerPage /> },
-          { path: "cambiar-password", element: <ChangePasswordPage /> },
-          { path: "eliminar-cuenta", element: <DeleteAccountPage /> },
+          { path: "change-password", element: <ChangePasswordPage /> },
+          { path: "delete-account", element: <DeleteAccountPage /> },
           { path: "register-parking", element: <RegisterParkingPage/>}
         ],
       },
