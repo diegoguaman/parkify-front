@@ -1,18 +1,20 @@
+//import { FormUserValues } from "../types";
 
 const authService = {
-    async login2(email: string, password: string) {
-        // try {
-        //   const response = await axios.post('/login',{
-        //     email,
-        //     password
-        //   });
+    // async login2(email: string, password: string) {
+    //     // try {
+    //     //   const response = await axios.post('/login',{
+    //     //     email,
+    //     //     password
+    //     //   });
           
-        //   console.log(response);
-        // } catch (error) {
-        //   console.error(error);
-        // }
-    },
-    async login(email: string, password: string) {
+    //     //   console.log(response);
+    //     // } catch (error) {
+    //     //   console.error(error);
+    //     // }
+    // },
+    //async login(email: string, password: string) {
+    async login() {
         return {
             token: "token",
             user: {
@@ -21,6 +23,17 @@ const authService = {
             }
         }
     },
+    //async registerUser  (userData: FormUserValues) {
+      async registerUser() {
+        try {
+          //const response = await axios.post("/api/register-user", userData);
+          //return response.data;
+          return true
+        } catch (error) {
+          console.error("Error al registrar el usuario:", error);
+          throw error; 
+        }
+    }
   
   
   };
