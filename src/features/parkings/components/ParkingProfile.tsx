@@ -10,8 +10,8 @@ import {
 
 
 import { Parking } from "../../../shared/types/parking";
-// import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
-// import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import ButtonWhatsapp from "../../../shared/ui/components/ButtonWhatsapp";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import StarIcon from "@mui/icons-material/Star"; 
 
 type ParkingProfileProps = {
@@ -88,7 +88,7 @@ export const ParkingProfile = ({ parking, onReserve }: ParkingProfileProps) => {
 
 
             {/* Plazas + horario */}
-            <Box display="flex" gap={1} mt={1}>
+            <Box display="flex" gap={1} mt={1} justifyContent={"space-between"}>
               <Chip
                 label={`${parking.availableSpots} plazas`}
                 size="small"
@@ -107,12 +107,12 @@ export const ParkingProfile = ({ parking, onReserve }: ParkingProfileProps) => {
 
             {/* Botón */}
             <Box mt={1} display="flex" justifyContent="flex-end">
-  {/* <ButtonPrimary onClick={onReserve}>
+  { <ButtonWhatsapp onClick={onReserve}>
     <Box display="flex" alignItems="center">
       Reservar por whatsapp
       <WhatsAppIcon sx={{ ml: 1 }} />
     </Box>
-  </ButtonPrimary> */}
+  </ButtonWhatsapp> }
 </Box>
 
           </CardContent>
