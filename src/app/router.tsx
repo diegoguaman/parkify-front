@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 import PublicLayout from '../layouts/PublicLayout';
 import HomePage from '../features/parkings/pages/HomePage';
 import LoginPage from '../features/auth/pages/LoginPage';
@@ -12,7 +12,7 @@ import PublicOnlyRoute from '../features/auth/components/PublicOnlyRoute';
 import MapLayout from '../layouts/MapLayout';
 import MapPage from '../features/maps/pages/MapPage';
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     element: <LayoutAuth />,
     children: [

@@ -4,7 +4,8 @@ import react from '@vitejs/plugin-react'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-   build: {
+  base: './', // Cambiamos rutas absolutas por relativas (para que funcione en el bucket)
+  build: {
     rollupOptions: {
       output: {
         manualChunks: {
@@ -17,3 +18,4 @@ export default defineConfig({
     },
   },
 })
+
