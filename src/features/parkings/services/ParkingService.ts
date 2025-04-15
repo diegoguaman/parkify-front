@@ -80,6 +80,11 @@ const parkingService = {
         }
     },
 
+    async deleteParking (id: string) {
+      console.log(id)
+      //llamada a la api delete-parking/id
+      return "Parking eliminado"
+    },
     async changePassword(data: ChangePasswordFormData){
       //llamada api - endpoint cambiar contraseña
       console.log(data)
