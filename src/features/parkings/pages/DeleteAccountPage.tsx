@@ -4,11 +4,20 @@ import { Box, TextField, Typography } from "@mui/material";
 import ButtonDangerSecondary from "../../../shared/ui/components/ButtonDangerSecondary";
 import styles from "../../../shared/styles/ParkingForm.module.css";
 import { showSuccess } from "../../../shared/ui/toast";
+import parkingService from "../services/ParkingService";
+import { useAuthStore } from "../../../store/auth.store";
+import { useNavigate } from "react-router-dom";
+import authService from "../../auth/services/AuthService";
+import { useParkingStore } from "../../../store/parking.store";
 
 interface DeleteAccountForm {
   deletionReason: string;
 }
 const DeleteAccountPage = () => {
+  const logout = useAuthStore((state) => state.logout)
+  const navigate = useNavigate()
+  const clearParkingData = useParkingStore((state) => state.clearParkingData)
+
   const {
     register,
     handleSubmit,
@@ -17,15 +26,20 @@ const DeleteAccountPage = () => {
 
   const onSubmit = async (data:DeleteAccountForm) => {
     console.log(data)
-    showSuccess("Cuenta cerrada con éxito");
-    //conectar con el service
-    //hacer logout
-    //redirigir a home
+    //eliminar cuenta de usuario
+    const result = await authService.deleteAccount('1')
+    //eliminar estacionamiento
+    result && logout()
+    const deleteParking = await parkingService.deleteParking('1')
+    //limipiar la store
+    deleteParking && clearParkingData()
+    showSuccess(result);
+    navigate('/')
   };
 
   return (
     <>
-      <HeaderForm />
+      <HeaderForm path="/profile" />
       <Box
         sx={{ mx: "auto" }}
         display="flex"
