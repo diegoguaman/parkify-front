@@ -1,6 +1,6 @@
 import { createBrowserRouter, createHashRouter } from 'react-router-dom';
 import PublicLayout from '../layouts/PublicLayout';
-import { Home } from '../shared/ui/components';
+import HomePage from '../features/parkings/pages/HomePage';
 import LoginPage from '../features/auth/pages/LoginPage';
 import LayoutAuth from '../layouts/LayoutAuth';
 import ProfileOwnerPage from '../features/parkings/pages/ProfileOwnerPage';
@@ -31,7 +31,7 @@ const routes = [
     path: "/",
     element: <PublicLayout />,
     children: [
-      { index: true, element: <Home /> },
+      { index: true, element: <HomePage /> },
       {
         path: "parkings/:id",
         element: <ParkingProfilePage />,
