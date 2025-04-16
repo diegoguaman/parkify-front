@@ -6,7 +6,7 @@ export const MarkerList = () => {
   return (
     <>
       {mockParkings.map((p) => (
-        <ParkingMarker parking={p} />
+        <ParkingMarker key={p.id} parking={p} />
       ))}
     </>
   );
