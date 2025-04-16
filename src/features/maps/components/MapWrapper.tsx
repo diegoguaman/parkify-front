@@ -9,6 +9,7 @@ const libraries: ('places')[] = ['places'];
 export const MapWrapper: FC<Props> = ({ children }) => {
   
   //asegura q los script este cargados antes de renderizar el mapa
+  //ya que daban varios warning cuando se mostraba el mapa
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries,
