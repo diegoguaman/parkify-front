@@ -20,6 +20,7 @@ export const AvailabilityStatus = ({ parkingId }: Props) => {
       label={`${slots} plaza${slots === 1 ? '' : 's'} disponible${slots === 1 ? '' : 's'}`}
       color={slots > 0 ? 'success' : 'error'}
       variant="outlined"
+      sx={{ bgcolor: "#f5f5f5", fontWeight: 500, borderRadius: 2 }}
     />
   )
 }
