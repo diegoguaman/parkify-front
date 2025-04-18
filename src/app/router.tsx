@@ -13,7 +13,6 @@ import MapPage from '../features/maps/pages/MapPage';
 import ParkingProfilePage from '../features/parkings/pages/ParkingProfilePage';
 import RegisterParkingPage from '../features/parkings/pages/RegisterParkingPage';
 import RegisterPage from '../features/auth/pages/RegisterPage';
-import { patch } from '@mui/material';
 import AvailabilitySpotsPage from '../features/parkings/pages/AvailabilitySpotsPage';
 
 const routes = [
