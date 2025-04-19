@@ -1,4 +1,5 @@
 import {create} from 'zustand';
+import { persist } from "zustand/middleware";
 
 interface Parking {
   id: string;
@@ -42,7 +43,8 @@ interface ParkingState {
     lng:0,
   }
 
-  export const useParkingStore = create<ParkingState>(
+  export const useParkingStore = create<ParkingState>()(
+    persist(
       (set, get) => ({
         parking: initialState,
         setParkingData: (data) =>
@@ -54,6 +56,9 @@ interface ParkingState {
           })),
         getParkingData: () => get().parking,
         clearParkingData: () => set({ parking: initialState }),
+      }),{
+        name: "parking-storage",
+        partialize: (state) => ({ parking: state.parking }), 
       }
     )
   );
