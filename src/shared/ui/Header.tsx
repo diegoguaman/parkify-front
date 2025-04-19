@@ -160,7 +160,7 @@ const Header: React.FC = () => {
                   key={button.label}
                   onClick={() => handleButtonClick(button)}
                   sx={{
-                    color: button.color || "inherit",
+                    color: "inherit",
                   }}
                 >
                   {button.label}
