@@ -8,6 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Diversity3OutlinedIcon from "@mui/icons-material/Diversity3Outlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -90,7 +91,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
         <Box
           ref={ref}
@@ -119,7 +120,7 @@ const Header: React.FC = () => {
           {isMobile ? (
             <>
               <IconButton color="inherit" onClick={handleMenuOpen}>
-                <MenuIcon />
+                {isLoggedIn ? <AccountCircleOutlinedIcon/> : <MenuIcon />}
               </IconButton>
               <Menu
                 anchorEl={anchorEl}
@@ -160,7 +161,7 @@ const Header: React.FC = () => {
                   key={button.label}
                   onClick={() => handleButtonClick(button)}
                   sx={{
-                    color: button.color || "inherit",
+                    color: "inherit",
                   }}
                 >
                   {button.label}
