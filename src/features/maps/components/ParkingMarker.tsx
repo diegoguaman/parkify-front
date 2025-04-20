@@ -9,12 +9,12 @@ import { Parking, useParkingStore } from '../../../store/parking.store';
 
 const ParkingMarker = ({ parking }: { parking: Parking }) => {
   const setSelected = useParkingStore((s) => s.setSelected);
-  const availability = useParkingStore((s)=> s.availability)
-  const parkingId = useParkingStore((s) => s.parking.id)
+  //const availability = useParkingStore((s)=> s.availability)
+  //const parkingId = useParkingStore((s) => s.parking.id)
   //verifica si el parking esta en la lista de recomendados
   const isRecommended = recommendedParkingIds.includes(Number(parking.id));
   //verifica si hay disponibilidad
-  const isFull = availability[parkingId] === 0;
+  const isFull = parking.availableSpots === 0;
 
   //clases
   const classes = [styles.priceMarker];
