@@ -7,7 +7,7 @@ import { showSuccess } from "../../../shared/ui/toast";
 import parkingService from "../services/ParkingService";
 import { useAuthStore } from "../../../store/auth.store";
 import { useNavigate } from "react-router-dom";
-import authService from "../../auth/services/AuthService";
+//import authService from "../../auth/services/AuthService";
 import { useParkingStore } from "../../../store/parking.store";
 
 interface DeleteAccountForm {
@@ -27,13 +27,13 @@ const DeleteAccountPage = () => {
   const onSubmit = async (data:DeleteAccountForm) => {
     console.log(data)
     //eliminar cuenta de usuario
-    const result = await authService.deleteAccount('1')
+    //const result = await authService.deleteAccount('1')
     //eliminar estacionamiento
-    result && logout()
+    //result && logout()
     const deleteParking = await parkingService.deleteParking('1')
     //limipiar la store
     deleteParking && clearParkingData()
-    showSuccess(result);
+    //showSuccess(result);
     navigate('/')
   };
 
