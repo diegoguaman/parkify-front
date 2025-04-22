@@ -1,19 +1,27 @@
-const socketURL = import.meta.env.VITE_API_URL;
-const isSocketEnabled = JSON.parse(import.meta.env.VITE_SOCKET_ENABLED.toLowerCase());
+import { io, Socket } from 'socket.io-client';
 
-if (!isSocketEnabled) {
-  console.warn('WebSocket connection disabled by environment configuration.');
-  return null;
-}
+let socket: Socket | null = null;
 
-if (socketURL && isSocketEnabled) {
+export const getSocket = (): Socket | null => {
+  // Imprime el valor de la variable VITE_SOCKET_ENABLED antes de compararla
+  console.log('VITE_SOCKET_ENABLED:', import.meta.env.VITE_SOCKET_ENABLED);
+
+  // Convertir a minúsculas y luego hacer el parseo
+  const isSocketEnabled = JSON.parse(import.meta.env.VITE_SOCKET_ENABLED.toLowerCase());
+
+  // Imprime el valor de isSocketEnabled después de parsearlo
+  console.log('Is WebSocket enabled?', isSocketEnabled);
+
+  if (!isSocketEnabled) {
+    console.warn('WebSocket connection disabled by environment configuration.');
+    return null;
+  }
+
   if (!socket) {
     try {
-      const wsURL = socketURL.startsWith('https://') || socketURL.startsWith('http://')
-        ? socketURL.replace('http', 'ws') // cambia http:// o https:// a ws:// o wss://
-        : 'ws://' + socketURL; // Si no tiene protocolo, añadirlo con ws://
-
-      socket = io(wsURL, {
+      // Intenta crear la conexión con WebSocket e imprime el URL de la API
+      console.log('Connecting to WebSocket at URL:', import.meta.env.VITE_API_URL);
+      socket = io(import.meta.env.VITE_API_URL, {
         autoConnect: false,
         transports: ['websocket'],
       });
@@ -22,4 +30,6 @@ if (socketURL && isSocketEnabled) {
       socket = null;
     }
   }
-}
+
+  return socket;
+};
