@@ -9,7 +9,7 @@ export const getSocket = (): Socket | null => {
   console.log('VITE_SOCKET_ENABLED:', import.meta.env.VITE_SOCKET_ENABLED);
   
   // Asegurarnos de que estamos comparando correctamente el valor
-  const isSocketEnabled = import.meta.env.VITE_SOCKET_ENABLED === 'true';
+  const isSocketEnabled = import.meta.env.VITE_SOCKET_ENABLED.trim() === 'true';
 
   // Imprimir si el socket está habilitado
   console.log('Is WebSocket enabled?', isSocketEnabled);
