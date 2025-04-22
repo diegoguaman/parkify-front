@@ -1,8 +1,7 @@
 import { GoogleMap } from '@react-google-maps/api';
 import { useUserLocationStore } from '../store/userLocation.store';
 import { MarkerList } from './MarkerList';
-import { Parking } from '../../../shared/types/parking'; // 👈 Asegúrate de tener este import
-
+import { Parking } from '../../../store/parking.store';
 const containerStyle = { width: '100%', height: '100vh' };
 
 // 👇 Este tipo define la prop que esperas recibir

@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import useMapStore from "../store/useMap.store";
 import ParkingMarker from "./ParkingMarker";
-import { Parking } from "../../../shared/types/parking";
-
+import { Parking } from "../../../store/parking.store";
 type MarkerListProps = {
   onParkingSelect: (parking: Parking) => void;
 };

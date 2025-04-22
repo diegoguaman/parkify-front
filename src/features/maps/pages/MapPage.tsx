@@ -3,9 +3,8 @@ import { useUserLocation } from '../hooks/useUserLocation';
 import { MapWrapper } from '../components/MapWrapper';
 import { MapView } from '../components/MapView';
 import { Box } from '@mui/material';
-import { Parking } from '../../../shared/types/parking';
-import { ParkingProfile } from '../../parkings/components/ParkingProfile';
-
+import { Parking } from '../../../store/parking.store';
+import { ParkingCard } from '../../../features/parkings/components/ParkingCard';
 const MapPage = () => {
   useUserLocation();
   const [selectedParking, setSelectedParking] = useState<Parking | null>(null);
@@ -37,7 +36,11 @@ const MapPage = () => {
                 maxWidth: 420,
               }}
             >
-              <ParkingProfile parking={selectedParking} />
+              <ParkingCard parking={selectedParking} onReserve={() => {
+                const phone = selectedParking.parkingPhone;
+                const message = encodeURIComponent(`Hola, quiero reservar una plaza en ${selectedParking.parkingName}.`);
+                window.open(`https://wa.me/${phone}?text=${message}`, "_blank");
+              }}/>
             </Box>
           </Box>
         )}
