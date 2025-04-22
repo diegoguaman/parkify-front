@@ -3,13 +3,14 @@ import { io, Socket } from 'socket.io-client';
 let socket: Socket | null = null;
 
 export const getSocket = (): Socket | null => {
-  // Imprime el valor de la variable VITE_SOCKET_ENABLED antes de compararla
-  console.log('VITE_SOCKET_ENABLED:', import.meta.env.VITE_SOCKET_ENABLED);
+  const rawSocketFlag = import.meta.env.VITE_SOCKET_ENABLED;
+  const rawApiUrl = import.meta.env.VITE_API_URL;
 
-  // Convertir a minúsculas y luego hacer el parseo
-  const isSocketEnabled = JSON.parse(import.meta.env.VITE_SOCKET_ENABLED.toLowerCase());
+  console.log('VITE_SOCKET_ENABLED:', rawSocketFlag);
+  console.log('VITE_API_URL:', rawApiUrl);
 
-  // Imprime el valor de isSocketEnabled después de parsearlo
+  const isSocketEnabled = rawSocketFlag?.toLowerCase() === 'true';
+
   console.log('Is WebSocket enabled?', isSocketEnabled);
 
   if (!isSocketEnabled) {
@@ -19,9 +20,15 @@ export const getSocket = (): Socket | null => {
 
   if (!socket) {
     try {
-      // Intenta crear la conexión con WebSocket e imprime el URL de la API
-      console.log('Connecting to WebSocket at URL:', import.meta.env.VITE_API_URL);
-      socket = io(import.meta.env.VITE_API_URL, {
+      // Asegurar que tenga http:// si no tiene protocolo
+      let apiUrl = rawApiUrl;
+      if (!apiUrl.startsWith('http://') && !apiUrl.startsWith('https://')) {
+        apiUrl = `http://${apiUrl}`;
+        console.log('No protocol in API URL, defaulting to:', apiUrl);
+      }
+
+      console.log('Connecting to WebSocket at URL:', apiUrl);
+      socket = io(apiUrl, {
         autoConnect: false,
         transports: ['websocket'],
       });
