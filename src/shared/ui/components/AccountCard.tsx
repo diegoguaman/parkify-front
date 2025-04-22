@@ -8,6 +8,7 @@ interface AccountCardProps {
 }
 
 const AccountCard = ({user}: AccountCardProps) => {
+  console.log(user)
   return (
     <CardContainer>
       <Box textAlign="center">

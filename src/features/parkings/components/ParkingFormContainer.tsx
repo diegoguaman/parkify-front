@@ -17,7 +17,6 @@ import { useParkingStore } from "../../../store/parking.store";
 import parkingService from "../services/ParkingService";
 import { showSuccess } from "../../../shared/ui/toast";
 import { useNavigate } from "react-router-dom";
-import { boolean } from "yup";
 
 interface ParkingFormContainerProps {
   mode: "register" | "edit";
