@@ -1,4 +1,3 @@
-
 import { OverlayView } from '@react-google-maps/api';
 import styles from './Maps.module.css';
 import { recommendedParkingIds } from '../data/mock-parkings';
@@ -6,23 +5,22 @@ import { recommendedParkingIds } from '../data/mock-parkings';
 import { Parking, useParkingStore } from '../../../store/parking.store';
 //import { useParkingStore } from '../../parkings/store/parkingStore';
 
+type Props = {
+  parking: Parking;
+  onClick: () => void;
+};
 
-const ParkingMarker = ({ parking }: { parking: Parking }) => {
+const ParkingMarker = ({ parking, onClick }: Props) => {
   const setSelected = useParkingStore((s) => s.setSelected);
   //const availability = useParkingStore((s)=> s.availability)
   //const parkingId = useParkingStore((s) => s.parking.id)
   //verifica si el parking esta en la lista de recomendados
+
   const isRecommended = recommendedParkingIds.includes(Number(parking.id));
-  //verifica si hay disponibilidad
   const isFull = parking.availableSpots === 0;
 
-  //clases
   const classes = [styles.priceMarker];
-
-  //si esta completo agrega clase full
   if (isFull) classes.push(styles.full);
-
-  //si esta recomendado agrega clase 
   else if (isRecommended) classes.push(styles.recommendation);
 
   return (
@@ -31,7 +29,7 @@ const ParkingMarker = ({ parking }: { parking: Parking }) => {
       position={{ lat: parking.lat, lng: parking.lng }}
       mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
     >
-      <div className={classes.join(' ')} onClick={() => setSelected(parking)}>
+      <div className={classes.join(' ')} onClick={onClick}>
         ${parking.hourlyRate}
         <div className={styles.priceMarkerArrow} />
       </div>
@@ -39,4 +37,4 @@ const ParkingMarker = ({ parking }: { parking: Parking }) => {
   );
 };
 
-export default ParkingMarker
+export default ParkingMarker;

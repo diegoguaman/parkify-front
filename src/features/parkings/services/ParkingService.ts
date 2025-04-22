@@ -86,7 +86,7 @@ const parkingService = {
             parkingName: data.parkingName,
             parkingAddress: data.parkingAddress,
             parkingPhone: data.parkingPhone,
-            imageParking: '', 
+            imageParking: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be', 
           }
         //throw new Error("Error simulado")
     },
