@@ -1,27 +1,37 @@
-import { io, Socket } from 'socket.io-client';
+let socket: WebSocket | null = null;
 
-let socket: Socket | null = null;
-
-export const getSocket = (): Socket | null => {
+export const getSocket = (): WebSocket | null => {
   const isSocketEnabled = import.meta.env.VITE_SOCKET_ENABLED?.toLowerCase() === 'true';
   const apiUrl = import.meta.env.VITE_API_URL;
 
-  console.log('VITE_SOCKET_ENABLED:', import.meta.env.VITE_SOCKET_ENABLED);
-  console.log('VITE_API_URL:', apiUrl);
-  console.log('Is WebSocket enabled?', isSocketEnabled);
-
   if (!isSocketEnabled) {
-    console.warn('WebSocket connection disabled by environment configuration.');
+    console.warn('WebSocket deshabilitado por configuración.');
     return null;
   }
 
-  if (!socket) {
-    console.log('Connecting to WebSocket at URL:', apiUrl);
-    socket = io(apiUrl, {
-      autoConnect: false,
-      transports: ['websocket'],
-    });
+  const wsUrl = apiUrl.replace(/^http/, 'ws') + '/ws'; // Ej: ws://34.107.135.109/ws
+  console.log('🧩 Conectando a WebSocket en:', wsUrl);
+
+  if (!socket || socket.readyState === WebSocket.CLOSED) {
+    socket = new WebSocket(wsUrl);
+
+    socket.onopen = () => {
+      console.log('✅ WebSocket conectado.');
+    };
+
+    socket.onmessage = (event) => {
+      console.log('📨 Mensaje recibido:', event.data);
+    };
+
+    socket.onerror = (error) => {
+      console.error('❌ WebSocket error:', error);
+    };
+
+    socket.onclose = (event) => {
+      console.warn('🔌 WebSocket cerrado:', event.reason);
+    };
   }
 
   return socket;
 };
+
