@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { getSocket } from '../lib/socket';  // Este ahora puede ser innecesario si usas directamente WebSocket
+import { getSocket } from '../lib/socket';  // Asegúrate de que esta importación esté correcta
 import { useParkingStore } from '../../../store/parking.store';
 
 /**
@@ -7,42 +7,33 @@ import { useParkingStore } from '../../../store/parking.store';
  * @returns {void}
  */
 export const useAvailabilitySocket = (): void => {
-  const setAvailability = useParkingStore((state) => state.setAvailability);
+  const setAvailability = useParkingStore((state) => state.setAvailability);  // Sacamos el hook de aquí
 
   useEffect(() => {
-    // Crear la instancia del WebSocket con la URL correcta
-    const socket = new WebSocket('ws://34.107.135.109/socket-io');  // Reemplaza con tu URL de WebSocket correcta
+    // Obtener la instancia del socket usando getSocket
+    const socket = getSocket();  // Aquí estamos usando getSocket
 
-    // Manejar la apertura de la conexión
-    socket.addEventListener('open', () => {
-      console.log('WebSocket connected');
-    });
+    if (!socket) {
+      console.warn('Socket está deshabilitado o no disponible. Saltando actualizaciones en tiempo real.');
+      return;
+    }
+
+    // Solo conectar si no está ya conectado
+    socket.onopen = () => {
+      console.log('✅ WebSocket conectado.');
+    };
 
     // Evento: alguien modificó la disponibilidad
     socket.addEventListener('message', (event) => {
-      const data = JSON.parse(event.data); // Parsear el mensaje recibido
+      const data = JSON.parse(event.data);
       if (data && data.parkingId && data.slots !== undefined) {
-        setAvailability(data.parkingId, data.slots); // Actualizar el estado de disponibilidad en el store
+        setAvailability(data.parkingId, data.slots);
       }
     });
 
-    // Evento de error
-    socket.addEventListener('error', (error) => {
-      console.error('WebSocket error:', error);
-    });
-
-    // Evento de cierre de conexión
-    socket.addEventListener('close', () => {
-      console.log('WebSocket closed');
-    });
-
-    // Cleanup: Cerrar la conexión y eliminar listeners cuando el componente se desmonte
+    // Cleanup: Cerrar la conexión cuando el componente se desmonte
     return () => {
-      socket.close(); // Cerrar el WebSocket
-      socket.removeEventListener('message', () => {}); // Eliminar el listener de mensajes
-      socket.removeEventListener('open', () => {}); // Eliminar el listener de apertura
-      socket.removeEventListener('error', () => {}); // Eliminar el listener de error
-      socket.removeEventListener('close', () => {}); // Eliminar el listener de cierre
+      socket.close();
     };
   }, [setAvailability]); // El hook se ejecuta solo cuando `setAvailability` cambia
 };
