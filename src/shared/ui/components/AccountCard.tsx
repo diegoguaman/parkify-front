@@ -16,12 +16,15 @@ const AccountCard = ({user}: AccountCardProps) => {
           ¡Hola!
         </Typography>
         <Typography variant="h1" sx={{ fontWeight: 800 }}>
-          hola
+          Armenía Parking
         </Typography>
       </Box>
+      <Box sx={{width:"100%", maxWidth:"420px"}}>
+        <ButtonHomeAction text="Mi cuenta" path="profile" />
+      </Box>
+
       {/* <Typography variant='body1' >¡Hola!</Typography>
         <Typography variant='h1' sx={{fontWeight: 800}}>Armenia Parking</Typography> */}
-      <ButtonHomeAction text="Mi cuenta" path="profile" />
     </CardContainer>
   );
 };
