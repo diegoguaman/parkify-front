@@ -56,6 +56,7 @@ const ProfileOwnerPage = () => {
           defaultValues={mapParkingToFormValues(parkingData)}
           onSubmit={handleUpdate}
           showExtraButtons
+          isLoading={false}
         />
       )}
     </Box>
