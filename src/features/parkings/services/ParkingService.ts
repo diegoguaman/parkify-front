@@ -48,13 +48,37 @@ const parseTime = (time: string) : {openTime: string, closeTime: string}=>{
     closeTime, 
   }
 }
+
+export const uploadImageToCloudinary = async (file: File) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
+
+
+  try {
+    // Usamos la instancia de 'api' que ya tienes configurada
+    const response = await api.post(import.meta.env.VITE_CLOUDINARY_URL, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+
+    return response.data.secure_url; // Devuelve la URL de la imagen subida
+  } catch (error) {
+    console.error("Error al subir la imagen:", error);
+    throw new Error("Error al subir la imagen");
+  }
+};
+
 // Función para Crear un parking
 export async function registerParking(data: FormParkingValues, parking: {lat: number; lng: number }) {
   try {
-    let imageUrl = 'https://dimobaservicios.com/wp-content/uploads/2022/10/como-gestionar-parking.png'
-    // if(data.imageParking){
-    //   imageUrl = await uploadImageToCloudinary(data.imageParking);
-    // }
+    //let imageUrl = 'https://dimobaservicios.com/wp-content/uploads/2022/10/como-gestionar-parking.png'
+    let imageUrl = ''
+    if(data.imageParking){
+      imageUrl = await uploadImageToCloudinary(data.imageParking);
+    }
     //payload.parkingImageUrl = imageUrl;
     const payload = mapFrontToBackend(data, parking, imageUrl);
     const response = await api.post('/parkings/my', payload);
