@@ -11,6 +11,11 @@ export const api = axios.create({
 // 2. Interceptor de request
 api.interceptors.request.use(
   (config) => {
+    if (config.url && config.url.includes('cloudinary.com')) {
+      // No se agrega el token de autorización en las solicitudes a Cloudinary
+      delete config.headers['Authorization'];
+    } else {
+
     // Aquí podrías añadir el token si existe en tu store (por ejemplo Zustand)
     const token = getToken();
     // Asegúrate de que config.headers esté definido
@@ -36,6 +41,7 @@ api.interceptors.request.use(
         config.headers['Content-Type'] = 'application/json';
       }
     }
+  }
     return config;
   },
   (error) => {
