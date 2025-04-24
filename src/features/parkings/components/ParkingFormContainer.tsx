@@ -85,7 +85,7 @@ const ParkingFormContainer = ({
         register={register}
         errors={errors}
         setValue={setValue}
-        mode="register"
+        mode={mode}
       />
       <Box className={styles.registerForm}>
         {errorMessage && (
