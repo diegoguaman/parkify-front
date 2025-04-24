@@ -14,7 +14,7 @@ import Banner from "../../../assets/home.svg";
 
 const Home: React.FC = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const user = useAuthStore((state) => state.user);
+  // const user = useAuthStore((state) => state.user);
 
   return (
     <Container sx={{ mt: 4, px:{xs:4, sm:6, md:8} }}>
@@ -69,7 +69,7 @@ const Home: React.FC = () => {
       {/* Cuenta o llamada a la acción */}
       <Box sx={{ mt: 6, textAlign: "center" }}>
         {isAuthenticated ? (
-          <AccountCard user={user} />
+          <AccountCard  />
         ) : (
           <HomeCard />
         )}

@@ -14,10 +14,10 @@ import { useModalStore } from "../../../store/modal.store";
 import ParkingModal from "./ParkingModal";
 import { registerParkingSchema } from "../schemas/parkingSchemas";
 import { useParkingStore } from "../../../store/parking.store";
-import parkingService from "../services/ParkingService";
+import { deleteParking } from "../services/ParkingService";
 import { showSuccess } from "../../../shared/ui/toast";
 import { useNavigate } from "react-router-dom";
-
+import { useAuthStore } from "../../../store/auth.store";
 interface ParkingFormContainerProps {
   mode: "register" | "edit";
   defaultValues?: FormParkingValues;
@@ -40,6 +40,7 @@ const ParkingFormContainer = ({
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
   const navigate = useNavigate();
+  const emailParking = useAuthStore((state) => state.user.email)
 
   const {
     register,
@@ -48,22 +49,23 @@ const ParkingFormContainer = ({
     setValue,
     trigger,
   } = useForm<FormParkingValues>({
-    defaultValues,
+    defaultValues: {
+      ...defaultValues,
+      email: emailParking,
+    },
     resolver: yupResolver(registerParkingSchema) as Resolver<FormParkingValues>,
   });
 
   //eliminar parking
   const handleDeleteParking = async () => {
     try {
-      console.log("borrar estacionamiento");
-      //llama al service para hacer el delete del Parking
-      const result = await parkingService.deleteParking("1");
-
-      //actualizo la store
-      clearParkingData()
+      //llama al service
+      const result = await deleteParking();
       if (result) {
+        //actualizo la store
+        clearParkingData()
         closeModal();
-        showSuccess(result);
+        showSuccess("Estacionamiento eliminado con éxito");
         navigate("/profile");
       }
     } catch (error) {
@@ -83,6 +85,7 @@ const ParkingFormContainer = ({
         register={register}
         errors={errors}
         setValue={setValue}
+        mode="register"
       />
       <Box className={styles.registerForm}>
         {errorMessage && (
