@@ -10,13 +10,15 @@ const AccountCard = () => {
 
   return (
     <CardContainer>
-      <Box textAlign="center" display="flex" flexDirection="column" gap={1} mb={1}>
+      <Box textAlign="center" display="flex" flexDirection="column" gap={1}>
         <Typography variant="body1" >
           ¡Hola!
         </Typography>
-        <Typography variant="h1"  sx={{fontWeight: 800}}>
+        {parking &&(
+          <Typography variant="h1"  sx={{fontWeight: 800}}>
           {parking.parkingName}
         </Typography>
+        )}
       </Box>
       <Box sx={{width:"100%", maxWidth:"420px"}}>
         <ButtonHomeAction text="Mi cuenta" path="profile" />
