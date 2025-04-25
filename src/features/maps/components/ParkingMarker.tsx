@@ -1,6 +1,6 @@
 import { OverlayView } from '@react-google-maps/api';
 import styles from './Maps.module.css';
-import { recommendedParkingIds } from '../data/mock-parkings';
+//import { recommendedParkingIds } from '../data/mock-parkings';
 //import { Parking } from '../../../shared/types/parking';
 import { Parking } from '../../../store/parking.store';
 //import { useParkingStore } from '../../parkings/store/parkingStore';
@@ -9,7 +9,7 @@ type Props = {
   parking: Parking;
   onClick: () => void;
 };
-
+const recommendedParkingIds = [105,]; // deberia venir del back
 const ParkingMarker = ({ parking, onClick }: Props) => {
   //const setSelected = useParkingStore((s) => s.setSelected);
   //const availability = useParkingStore((s)=> s.availability)
