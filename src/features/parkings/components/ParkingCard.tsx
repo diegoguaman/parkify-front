@@ -74,7 +74,7 @@ export const ParkingCard = ({ parking }: ParkingProfileProps) => {
     px: 1.5,
     py: 1.5,
     flex: 1,
-    height: "100%", // 👈 AÑADE ESTO
+    height: "100%", 
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -107,7 +107,7 @@ export const ParkingCard = ({ parking }: ParkingProfileProps) => {
           </Typography>
           <Box display="flex" alignItems="center" gap={0.5}>
             <Typography variant="body2" fontWeight={500}>
-              {parking.rating}
+              {/* {parking.rating} */}4
             </Typography>
             <StarIcon sx={{ fontSize: 18, color: "#FFC107" }} />
           </Box>
@@ -123,7 +123,7 @@ export const ParkingCard = ({ parking }: ParkingProfileProps) => {
             label={
               parking.openTime && parking.closeTime
                 ? `${parking.openTime} a ${parking.closeTime}`
-                : "Horario no disponible"
+                : "12:00 a 19:00" //ver xq no funciona
             }
             size="small"
             sx={{

@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 const containerStyle = { width: '100%', height: '100vh' };
 
 type MapViewProps = {
-  onParkingSelect: (parking: Parking) => void;
+  onParkingSelect: (parking: Parking | null) => void;
 };
 
 export const MapView = ({ onParkingSelect }: MapViewProps) => {
@@ -36,6 +36,7 @@ export const MapView = ({ onParkingSelect }: MapViewProps) => {
       center={location}
       zoom={15}
       mapContainerStyle={containerStyle}
+      onClick={() => onParkingSelect(null)}
       options={{
         clickableIcons: false,
         gestureHandling: "greedy", // 👈 esto permite mover con un solo dedo
