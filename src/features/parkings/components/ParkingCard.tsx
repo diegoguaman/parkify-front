@@ -32,116 +32,120 @@ export const ParkingCard = ({ parking }: ParkingProfileProps) => {
   ].join("\n");
 
   return (
-    <Card
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "stretch",
-        gap: 0,
-        borderRadius: 4,
-        boxShadow: 3,
-        width: "100%",
-        maxWidth: 360,
-        minHeight: 120,
-        height: "auto",
-      }}
-    >
-      {/* Imagen */}
-      <Box
-  sx={{
-    height: "auto",
-    display: "flex",
-    flexDirection: "column",
-    flexShrink: 0,
-  }}
->
-  <CardMedia
-    component="img"
-    image={parking.imageParking}
-    alt={parking.parkingName}
+    <>
+      {/* <Box position="absolute" zIndex={1000} top={-30} left={33} sx={{backgroundColor:"secondary"}}>
+        <Typography variant="body2" sx={{p:0.6, backgroundColor:"secondary.main", borderRadius:1}}>Recomendado</Typography>
+      </Box> */}
+      <Card
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "stretch",
+          gap: 0,
+          position:"relative",
+          boxShadow: 3,
+          width: "100%",
+          maxWidth: 360,
+          minHeight: 100,
+        }}
+      > 
+        
+        {/* Imagen */}
+        <Box
     sx={{
-      width: 100,
-      flex: 1,                  // 👈 fuerza a estirarse verticalmente
-      objectFit: "cover",
-      borderRadius: "8px 0 0 8px",
+      display: "flex",
+      flexDirection: "column",
+      flexShrink: 0,
     }}
-  />
-</Box>
+  >
+    <CardMedia
+      component="img"
+      image={parking.imageParking}
+      alt={parking.parkingName}
+      sx={{
+        width: "100px",
+        flex: 1,                  // 👈 fuerza a estirarse verticalmente
+        objectFit: "cover",
 
-      {/* Contenido */}
-      <CardContent
-  sx={{
-    px: 1.5,
-    py: 1.5,
-    flex: 1,
-    height: "100%", 
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  }}
->
+      }}
+    />
+  </Box>
 
-        {/* Nombre y precio */}
-        <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
-          <Typography variant="subtitle1" fontWeight={600}>
-            {parking.parkingName}
-          </Typography>
-          <Typography variant="body2" fontWeight={500}>
-            {parking.hourlyRate}€ / h
-          </Typography>
-        </Box>
+        {/* Contenido */}
+        <CardContent
+    sx={{
+      px:1,
+      pb:0,
+      flex: 1, 
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+    }}
+  >
 
-        {/* Dirección */}
-        <Typography variant="body2" color="text.secondary">
-          {parking.parkingAddress}
-        </Typography>
-
-        {/* Distancia + Estrellas */}
-        <Box display="flex" justifyContent="space-between" alignItems="center" mt={0.5}>
-          <Typography variant="body2" color="success.main" fontWeight={500}>
-            {/* {parking.distance} km ({parking.estimatedTime}) */}
-            {/* {parking.distance.toFixed()} km ("11 min") */}
-            {parking.distance != null
-            ? `${parking.distance.toFixed(0)} km`
-            : '—'}
-          </Typography>
-          <Box display="flex" alignItems="center" gap={0.5}>
-            <Typography variant="body2" fontWeight={500}>
-              {/* {parking.rating} */}4
+          {/* Nombre y precio */}
+          <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
+            <Typography variant="subtitle1" fontWeight={600}>
+              {parking.parkingName}
             </Typography>
-            <StarIcon sx={{ fontSize: 18, color: "#FFC107" }} />
-          </Box>
-        </Box>
-
-        {/* Plazas + horario */}
-        <Box display="flex" justifyContent="space-between" alignItems="center" mt={1}>
-          <Box display="flex" gap={1}>
-            <AvailabilityStatus parkingId={parking.id} />
+            <Typography variant="body2" fontWeight={500}>
+              {parking.hourlyRate}€ / h
+            </Typography>
           </Box>
 
-          <Chip
-            label={
-              parking.openTime && parking.closeTime
-                ? `${parking.openTime} a ${parking.closeTime}`
-                : "12:00 a 19:00" //ver xq no funciona
-            }
-            size="small"
-            sx={{
-              bgcolor: "#f5f5f5",
-              fontWeight: 500,
-              borderRadius: 2,
-            }}
-          />
-        </Box>
+          {/* Dirección */}
+          <Typography variant="body2" color="text.secondary">
+            {parking.parkingAddress}
+          </Typography>
 
-        {/* Botón */}
-        <Box mt={2} display="flex" justifyContent="flex-end">
-          <ButtonWhatsapp
-            phone={`34${parking.parkingPhone}`}
-            message={message}
-          />
-        </Box>
-      </CardContent>
-    </Card>
+          {/* Distancia + Estrellas */}
+          <Box display="flex" justifyContent="space-between" alignItems="center" mt={0.5}>
+            <Typography variant="body2" color="success.main" fontWeight={500}>
+              {/* {parking.distance} km ({parking.estimatedTime}) */}
+              {/* {parking.distance.toFixed()} km ("11 min") */}
+              {parking.distance != null
+              ? `${parking.distance.toFixed(0)} km`
+              : '—'}
+            </Typography>
+            <Box display="flex" alignItems="center" gap={0.5}>
+              <Typography variant="body2" fontWeight={500}>
+                {/* {parking.rating} */}4
+              </Typography>
+              <StarIcon sx={{ fontSize: 18, color: "#FFC107" }} />
+            </Box>
+          </Box>
+
+          {/* Plazas + horario */}
+          <Box display="flex" justifyContent="space-between" alignItems="center" mt={1}>
+            <Box display="flex" gap={1}>
+              <AvailabilityStatus parkingId={parking.id} />
+            </Box>
+
+            <Chip
+              label={
+                parking.openTime && parking.closeTime
+                  ? `${parking.openTime} a ${parking.closeTime}`
+                  : "12:00 a 19:00" //ver xq no funciona
+              }
+              size="small"
+              sx={{
+                bgcolor: "#f5f5f5",
+                fontWeight: 500,
+                
+              }}
+            />
+          </Box>
+
+          {/* Botón */}
+          <Box mt={2} display="flex" justifyContent="flex-end">
+            <ButtonWhatsapp
+              phone={`34${parking.parkingPhone}`}
+              message={message}
+            />
+          </Box>
+        </CardContent>
+      </Card>
+    </>
+    
   );
 };

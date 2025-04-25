@@ -5,14 +5,16 @@ import { AddressAutocomplete } from "../../parkings/components/AddressAutocomple
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import FilterComponent from "./FilterComponent";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 const MapControls = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false)
   return (
     <>
       <Box
         sx={{
           zIndex: 1000,
-          width: "100%",
+          width: {xs: "100%", md:"30%"} ,
           position:"relative"
         }}
       >
@@ -54,6 +56,7 @@ const MapControls = () => {
                   borderColor: "none",
                   cursor: "pointer",
                 }}
+                onClick={()=>navigate('/mapa')}
               >
                 Mapa
               </Button>
@@ -74,6 +77,7 @@ const MapControls = () => {
             fullWidth
             variant="contained"
             color="secondary"
+            onClick={() => navigate("/recommended")}
             sx={{
               mt: 1,
               textTransform: "none",

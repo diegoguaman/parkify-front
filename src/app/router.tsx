@@ -16,6 +16,7 @@ import RegisterPage from '../features/auth/pages/RegisterPage';
 import AvailabilitySpotsPage from '../features/parkings/pages/AvailabilitySpotsPage';
 import ParkingProtectedRoute from '../features/auth/components/ParkingProtectedRoute';
 import NoParkingRoute from '../features/auth/components/NoParkingRoute';
+import RecommendedPage from '../features/maps/pages/RecommendedPage';
 
 const routes = [
   {
@@ -65,6 +66,8 @@ const routes = [
     element: <MapLayout />,
     children: [
       { path: "mapa", element: <MapPage /> },
+      { path: "recommended", element: <RecommendedPage  /> },
+
     ],
   },
 ];
