@@ -105,7 +105,7 @@ const ParkingFormContainer = ({
       <Box className={styles.registerForm}>
         <ButtonPrimary
           text={
-            isLoading ? <Loader size={20} /> :
+            isLoading ? <Loader size={10} /> :
             mode === "register"
               ? "Registrar estacionamiento"
               : "Guardar cambios"

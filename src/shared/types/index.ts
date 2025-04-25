@@ -4,6 +4,7 @@ import { FormRegisterValues } from "../../features/auth/types";
 
 export type FormParkingValues = {
   imageParking?: File | null;
+  parkingImageUrl?: string;
   email: string;
   totalSpots: number;
   hourlyRate: number;

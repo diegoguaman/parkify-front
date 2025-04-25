@@ -7,7 +7,7 @@ import { FormParkingValues } from "../../../shared/types";
 import ParkingEmptyState from "../components/ParkingEmptyState";
 import ParkingFormContainer from "../components/ParkingFormContainer";
 import { useScrollToHeader } from "../../../shared/hooks/useScrollToHeader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { handleError } from "../../../shared/utils/handleError";
 import { AxiosError } from "axios";
 // import { useAuthStore } from "../../../store/auth.store";
@@ -15,7 +15,8 @@ import { AxiosError } from "axios";
 
 //mapea de un parking a un FormParkingValues
 const mapParkingToFormValues = (parking: Parking): FormParkingValues => ({
-  imageParking: null, 
+  imageParking: null,
+  parkingImageUrl: parking.imageParking, 
   email: parking.email,
   totalSpots: parking.totalSpots,
   hourlyRate: parking.hourlyRate,
@@ -38,8 +39,11 @@ const ProfileOwnerPage = () => {
   // const user = useAuthStore((state) => state.user)
   // const updateEmail = useAuthStore((state) => state.updateEmail)
   const availability = useParkingStore((state) => state.availability)
-
+  console.log("parking", parking)
   //actualizacion de perfil
+  useEffect(() => {
+    console.log("Parking data actualizado:", parkingData);
+  }, [parkingData]);
   const handleUpdate = async (data: FormParkingValues) => {
     try {
       setIsLoading(true);
