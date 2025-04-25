@@ -67,11 +67,12 @@ const FilterComponent = () => {
     <Box
       boxShadow={2}
       sx={{
-        width: "70%",
+        width: "50%",
         maxWidth: "400px",
+        height: "65vh",
         bgcolor: "#F6FFFC",
         position: "absolute",
-        top: "8.2rem",
+        top: "6.5rem",
         right: 0,
         zIndex: 1100,
       }}

@@ -48,6 +48,7 @@ export const AddressAutocomplete = ({ setValue, placeholder = "Dirección del es
       <TextField
         inputRef={inputRef}
         fullWidth
+        size='small'
         label={placeholder}
         placeholder={placeholder}
         defaultValue={parkingData.parkingAddress || ""}

@@ -22,13 +22,13 @@ const MapControls = ({ toggleList, showList  }: MapControlsProps) => {
           position:"relative"
         }}
       >
-        <Paper elevation={3} sx={{ px: 2, py: 2 }}>
-          <Stack direction="row" spacing={1} alignItems="center">
+        <Paper sx={{ px: 2, py: 1.5 }}>
+          <Stack direction="row"  alignItems="center">
             <Box sx={{ width: "100%" }}>
               <AddressAutocomplete placeholder="Buscar zona" withSearchIcon />
             </Box>
           </Stack>
-          <Box display="flex" justifyContent="space-between" sx={{ my: 1 }}>
+          <Box display="flex" justifyContent="space-between" sx={{ my: 0.5 }}>
             <Box
               display="flex"
               boxShadow={2}
@@ -71,9 +71,10 @@ const MapControls = ({ toggleList, showList  }: MapControlsProps) => {
             </Box>
             <Box display="flex" sx={{}}>
               <Button
+                size="small"
                 variant="outlined"
                 startIcon={<FilterAltOutlinedIcon sx={{}} />}
-                sx={{ borderColor: "none", cursor: "pointer" }}
+                sx={{ borderColor: "none", cursor: "pointer", py: 0.5, }}
                 onClick={()=> setOpen(!open)}
               >
                 Filtros
@@ -87,7 +88,8 @@ const MapControls = ({ toggleList, showList  }: MapControlsProps) => {
             color="secondary"
             onClick={() => navigate("/recommended")}
             sx={{
-              mt: 1,
+              mt: 0.5,
+              py: 0.5,
               textTransform: "none",
             }}
             endIcon={
