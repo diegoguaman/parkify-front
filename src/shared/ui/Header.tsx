@@ -111,7 +111,7 @@ const Header: React.FC = () => {
               component="img"
               src={logoHeader}
               alt="Logo"
-              sx={{ width: 140, height: "auto", pt: 2 }}
+              sx={{ width: 120, height: "auto", pt: 2 }}
             />
           </Box>
 

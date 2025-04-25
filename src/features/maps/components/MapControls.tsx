@@ -5,24 +5,30 @@ import { AddressAutocomplete } from "../../parkings/components/AddressAutocomple
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import FilterComponent from "./FilterComponent";
 import React from "react";
-const MapControls = () => {
+import { useNavigate } from "react-router-dom";
+type MapControlsProps = {
+  toggleList?: () => void;
+  showList?: boolean
+};
+const MapControls = ({ toggleList, showList  }: MapControlsProps) => {
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false)
   return (
     <>
       <Box
         sx={{
           zIndex: 1000,
-          width: "100%",
+          width: {xs: "100%", md:"30%"} ,
           position:"relative"
         }}
       >
-        <Paper elevation={3} sx={{ px: 2, py: 2 }}>
-          <Stack direction="row" spacing={1} alignItems="center">
+        <Paper sx={{ px: 2, py: 1.5 }}>
+          <Stack direction="row"  alignItems="center">
             <Box sx={{ width: "100%" }}>
               <AddressAutocomplete placeholder="Buscar zona" withSearchIcon />
             </Box>
           </Stack>
-          <Box display="flex" justifyContent="space-between" sx={{ my: 1 }}>
+          <Box display="flex" justifyContent="space-between" sx={{ my: 0.5 }}>
             <Box
               display="flex"
               boxShadow={2}
@@ -33,18 +39,22 @@ const MapControls = () => {
                 borderRadius: 1,
               }}
             >
+              {showList && (
               <Button
-                variant="text"
-                size="small"
-                sx={{
-                  fontSize: "10px",
-                  borderColor: "none",
-                  cursor: "pointer",
-                  color: grey[800],
-                }}
-              >
-                Lista
-              </Button>
+                  variant="text"
+                  size="small"
+                  onClick={toggleList}
+                  sx={{
+                    fontSize: "10px",
+                    borderColor: "none",
+                    cursor: "pointer",
+                    color: grey[800],
+                  }}
+                >
+                  Lista
+                </Button>
+              )}
+              
               <Divider orientation="vertical" flexItem />
               <Button
                 variant="text"
@@ -54,15 +64,17 @@ const MapControls = () => {
                   borderColor: "none",
                   cursor: "pointer",
                 }}
+                onClick={()=>navigate('/mapa')}
               >
                 Mapa
               </Button>
             </Box>
             <Box display="flex" sx={{}}>
               <Button
+                size="small"
                 variant="outlined"
                 startIcon={<FilterAltOutlinedIcon sx={{}} />}
-                sx={{ borderColor: "none", cursor: "pointer" }}
+                sx={{ borderColor: "none", cursor: "pointer", py: 0.5, }}
                 onClick={()=> setOpen(!open)}
               >
                 Filtros
@@ -74,8 +86,10 @@ const MapControls = () => {
             fullWidth
             variant="contained"
             color="secondary"
+            onClick={() => navigate("/recommended")}
             sx={{
-              mt: 1,
+              mt: 0.5,
+              py: 0.5,
               textTransform: "none",
             }}
             endIcon={

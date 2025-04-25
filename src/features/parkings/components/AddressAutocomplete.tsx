@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
 import { useParkingStore } from '../../../store/parking.store';
 import SearchIcon from '@mui/icons-material/Search';
+import { useUserLocationStore } from '../../maps/store/userLocation.store';
 interface Props {
   setValue?: UseFormSetValue<any>;
   placeholder?: string;
@@ -17,21 +18,25 @@ export const AddressAutocomplete = ({ setValue, placeholder = "Dirección del es
   const inputRef = useRef<HTMLInputElement | null>(null);
   const setParkingData = useParkingStore((state) => state.setParkingData)
   const parkingData = useParkingStore((state) => state.getParkingData());
-
+  const setLocation = useUserLocationStore((s) => s.setLocation);
   const onPlaceChanged = () => {
     if (autocompleteRef.current) {
       const place = autocompleteRef.current.getPlace();
       if (!place.geometry || !place.geometry.location) return;
-
+      
       const parkingAddress = place.formatted_address ?? inputRef.current?.value ?? '';
       const lat = place.geometry.location.lat();
       const lng = place.geometry.location.lng();
-
+      
       setValue?.("parkingAddress", parkingAddress, {
         shouldValidate: true,
         shouldTouch: true,
       });
+      // Guarda en el store de parking
       setParkingData({ parkingAddress, lat, lng });
+      // 🚀 Actualiza la ubicación global para centrar el mapa
+      console.log("Nueva ubicación:", { lat, lng });
+      setLocation({ lat, lng });
     }
   };
 
@@ -43,6 +48,7 @@ export const AddressAutocomplete = ({ setValue, placeholder = "Dirección del es
       <TextField
         inputRef={inputRef}
         fullWidth
+        size='small'
         label={placeholder}
         placeholder={placeholder}
         defaultValue={parkingData.parkingAddress || ""}

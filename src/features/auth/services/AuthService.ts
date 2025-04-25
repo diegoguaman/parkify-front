@@ -31,3 +31,12 @@ export async function me() {
     throw error as AxiosError;
   }
 }
+
+export async function updateUserEmail(email:string) {
+  try {
+    const response = await api.put('/auth/me/email', { newEmail: email });
+    return response.data;
+  } catch (error) {
+    throw error as AxiosError;
+  }
+}

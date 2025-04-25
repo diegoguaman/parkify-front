@@ -4,14 +4,16 @@ import { MarkerList } from './MarkerList';
 import { Parking, useParkingStore  } from '../../../store/parking.store';
 import Loader from '../../../shared/ui/components/Loader'; // Asegúrate que la ruta es correcta
 import { useEffect } from 'react';
+import MapControls from './MapControls';
 
 const containerStyle = { width: '100%', height: '100vh' };
 
 type MapViewProps = {
-  onParkingSelect: (parking: Parking) => void;
+  onParkingSelect: (parking: Parking | null) => void;
+  onListClick: () => void
 };
 
-export const MapView = ({ onParkingSelect }: MapViewProps) => {
+export const MapView = ({ onParkingSelect, onListClick }: MapViewProps) => {
   const location = useUserLocationStore((s) => s.location);
   const {
     //nearbyParkings,
@@ -36,6 +38,7 @@ export const MapView = ({ onParkingSelect }: MapViewProps) => {
       center={location}
       zoom={15}
       mapContainerStyle={containerStyle}
+      onClick={() => onParkingSelect(null)}
       options={{
         clickableIcons: false,
         gestureHandling: "greedy", // 👈 esto permite mover con un solo dedo
@@ -48,6 +51,7 @@ export const MapView = ({ onParkingSelect }: MapViewProps) => {
       }}
       
     >
+      <MapControls showList={true} toggleList={onListClick} />
       <MarkerList onParkingSelect={onParkingSelect} />
     </GoogleMap>
   );
