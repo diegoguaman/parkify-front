@@ -46,7 +46,7 @@ const parking2 = {
   };
   return (
     <>
-    <MapControls/>
+    <MapControls showList={false}/>
       <Box width={{xs: "100%", md:"30%",}} mt={2} display="flex" flexDirection="column" alignItems="center" gap={1} mx="auto">
           {/* {recommendedParkings.length > 0 ? (
             recommendedParkings.map((parking) => ( */}

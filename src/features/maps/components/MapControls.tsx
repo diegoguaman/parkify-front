@@ -6,7 +6,11 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import FilterComponent from "./FilterComponent";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-const MapControls = () => {
+type MapControlsProps = {
+  toggleList?: () => void;
+  showList?: boolean
+};
+const MapControls = ({ toggleList, showList  }: MapControlsProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false)
   return (
@@ -35,18 +39,22 @@ const MapControls = () => {
                 borderRadius: 1,
               }}
             >
+              {showList && (
               <Button
-                variant="text"
-                size="small"
-                sx={{
-                  fontSize: "10px",
-                  borderColor: "none",
-                  cursor: "pointer",
-                  color: grey[800],
-                }}
-              >
-                Lista
-              </Button>
+                  variant="text"
+                  size="small"
+                  onClick={toggleList}
+                  sx={{
+                    fontSize: "10px",
+                    borderColor: "none",
+                    cursor: "pointer",
+                    color: grey[800],
+                  }}
+                >
+                  Lista
+                </Button>
+              )}
+              
               <Divider orientation="vertical" flexItem />
               <Button
                 variant="text"

@@ -10,9 +10,10 @@ const containerStyle = { width: '100%', height: '100vh' };
 
 type MapViewProps = {
   onParkingSelect: (parking: Parking | null) => void;
+  onListClick: () => void
 };
 
-export const MapView = ({ onParkingSelect }: MapViewProps) => {
+export const MapView = ({ onParkingSelect, onListClick }: MapViewProps) => {
   const location = useUserLocationStore((s) => s.location);
   const {
     //nearbyParkings,
@@ -50,7 +51,7 @@ export const MapView = ({ onParkingSelect }: MapViewProps) => {
       }}
       
     >
-      <MapControls/>
+      <MapControls showList={true} toggleList={onListClick} />
       <MarkerList onParkingSelect={onParkingSelect} />
     </GoogleMap>
   );
