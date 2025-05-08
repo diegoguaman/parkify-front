@@ -20,6 +20,22 @@ const InputForm = ({placeholder, name, type, register, error}: InputFormProps) =
 
   const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
+  const getAutoComplete = (name: string) => {
+    switch (name) {
+      case "username":
+        return "username";
+      case "email":
+        return "email";
+      case "password":
+        return "new-password"; 
+      case "confirmPassword":
+        return "new-password"; 
+      default:
+        return "off";
+    }
+  };
+
+
   return (
       <TextField
         id={name} 
@@ -43,6 +59,7 @@ const InputForm = ({placeholder, name, type, register, error}: InputFormProps) =
             </InputAdornment>
           ),
         }}
+        autoComplete={getAutoComplete(name)} 
       />
     
   );
