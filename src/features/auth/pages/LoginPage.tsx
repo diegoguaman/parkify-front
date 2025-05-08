@@ -9,7 +9,7 @@ import AuthFormContainer from "../components/AuthFormContainer";
 import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
 import { FormValues } from "../types";
 
-import {loginService } from "../services/AuthService";
+import {loginService, me } from "../services/AuthService";
 import { useAuthStore} from "../../../store/auth.store";
 import { showError, showSuccess } from "../../../shared/ui/toast";
 import HeaderForm from "../../../shared/ui/components/HeaderForm";
@@ -23,7 +23,7 @@ import Loader from "../../../shared/ui/components/Loader";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const {login} = useAuthStore();
+  const {login, setUser, } = useAuthStore();
   const setParkingData = useParkingStore((state) => state.setParkingData)
   //const parkingName = useParkingStore((state) => state.parking.parkingName)
   const {
@@ -43,20 +43,26 @@ const LoginPage = () => {
       setIsLoading(true);
       setErrorMessage(null); // Reiniciar el mensaje de error al enviar el formulario
       const response = await loginService(data)
+      if(!response.token){
+        showError('No se recibió token');
+        return;
+      }
 
-      if (response.token) {
-        login(response.token, { email: response.email } ) // 👈 Guardamos token y usuario en Zustand
-        //ver si tiene ya un parking asociado
-        const parking = await getMyParking(); 
-        if (parking) {
-          setParkingData(parking);
-          showSuccess(`Bienvenido ${parking.parkingName}`);
-        } else{
-          showSuccess(`Bienvenido`);
-        }
-        reset();
-        navigate("/");
-      } 
+      login(response.token ) // 👈 Guardamos token en Zustand
+      //obtenemos datos del user 
+      const user = await me()
+      //guardamos en store
+      setUser(user)
+      //ver si tiene ya un parking asociado
+      const parking = await getMyParking(); 
+      if (parking) {
+        setParkingData(parking);
+        showSuccess(`Bienvenido ${parking.parkingName}`);
+      } else{
+        showSuccess(`Bienvenido ${user.name}`);
+      }
+      reset();
+      navigate("/");
    
     } catch (err) {
       console.error(err);
@@ -67,6 +73,7 @@ const LoginPage = () => {
       setIsLoading(false);
     }
   };
+
   const log = {
     show: true,
     description: "¿Eres nuevo?",
