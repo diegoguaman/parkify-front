@@ -1,22 +1,18 @@
 import styles from "../../../shared/styles/ParkingForm.module.css";
-import { Box, Link, Typography } from "@mui/material";
+import { Box, CircularProgress, FormControl, FormHelperText, InputLabel, Link, MenuItem, Select, Typography } from "@mui/material";
 import AuthFormContainer from "./AuthFormContainer";
 import { FormUserValues, UserRegistrationFormProps,  } from "../types";
-
 import { grey } from "@mui/material/colors";
 import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
 import { FieldsType } from "../../../shared/types";
 import InputForm from "../../../shared/ui/components/InputForm";
-import Loader from "../../../shared/ui/components/Loader";
 
 const fields: FieldsType[] = [
+  { name: "username", placeholder: "Nombre", type: "text" },
+  { name: "contactPhone", placeholder: "Teléfono", type: "text" },
   { name: "email", placeholder: "Correo", type: "email" },
   { name: "password", placeholder: "Contraseña", type: "password" },
-  {
-    name: "confirmPassword",
-    placeholder: "Repetir Contraseña",
-    type: "password",
-  },
+  { name: "confirmPassword", placeholder: "Repetir Contraseña", type: "password"},
 ];
 
 const UserRegistrationForm = ({
@@ -42,6 +38,28 @@ const UserRegistrationForm = ({
             error={errors[name as keyof FormUserValues]}
           />
         ))}
+        <FormControl fullWidth sx={{ my: 2 }} error={!!errors.role}>
+          <InputLabel id="role-select-label">Rol</InputLabel>
+          <Select
+            labelId="role-select-label"
+            id="role-select"
+            defaultValue=""
+            {...register("role")}
+            label="Rol"
+            sx={{
+              '& .MuiInputBase-input': {
+                padding: '12px', 
+              },
+            }}
+          >
+            <MenuItem value="OWNER">Dueño</MenuItem>
+            <MenuItem value="DRIVER">Conductor</MenuItem>
+          </Select>
+          {errors.role && (
+            <FormHelperText>{errors.role.message as string}</FormHelperText>
+          )}
+        </FormControl>
+
         <Typography variant="body2" sx={{ color: grey[600], my: 2 }}>
           Al continuar, aceptas los{" "}
           <Link
@@ -53,16 +71,17 @@ const UserRegistrationForm = ({
             términos y condiciones
           </Link>
         </Typography>
+        
+        <ButtonPrimary
+          text={isLoading ? <CircularProgress size={25}/> : "Continuar"}
+          type="submit"
+          disabled={isLoading}
+        />
         {errorMessage && (
-          <Typography variant="body2" color="error" sx={{ my: 2 }}>
+          <Typography variant="body2" color="error" sx={{py:1 }}>
             {errorMessage}
           </Typography>
         )}
-        <ButtonPrimary
-          text={isLoading ? <Loader size={20} /> : "Continuar"}
-          type="submit"
-          disabled={isLoading}
-/>
       </Box>
     </AuthFormContainer>
   );
