@@ -1,13 +1,23 @@
 import * as yup from "yup";
 //schema
 export const registerUserSchema  = yup.object().shape({
+    username: yup 
+      .string()
+      .required("El nombre es obligatorio"),
+    contactPhone: yup
+      .string()
+      .required("El número de contacto es obligatorio")
+      .matches(
+        /^[\d\s()+-]{6,20}$/,
+        "El número de teléfono no es válido"
+      ),
     email: yup
       .string()
       .required("El email es obligatorio")
       .matches(
         /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/,
         "Ingresá un email válido"
-      ),
+    ),
     password: yup
       .string()
       .required("La contraseña es obligatoria")
@@ -17,5 +27,8 @@ export const registerUserSchema  = yup.object().shape({
       .string()
       .required("Debes confirmar tu contraseña")
       .oneOf([yup.ref("password")], "Las contraseñas no coinciden"),
-   
+    role: yup
+      .string()
+      .oneOf(["OWNER", "DRIVER"], "Selecciona un rol válido")
+      .required("El rol es obligatorio"),
   });
