@@ -16,6 +16,8 @@ export async function register(data: FormUserValues) {
 export async function loginService (data: FormValues) {
   try {
     const response = await api.post('/auth/login', data);
+    //se podria mejorar verificando que la respuesta 
+    // devuelva el tipo q esperamos, zod o yup?
     return response.data;
   } catch (error) {
     throw error as AxiosError;

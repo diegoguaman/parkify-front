@@ -1,16 +1,23 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
-
+enum Role {
+  OWNER = "OWNER",
+  DRIVER = "DRIVER"
+}
 export interface User {
   email: string,
+  username: string,
+  role: Role,
+  contactPhone: string
 }
 interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
   user: User
-  login: (token: string, user: User) => void;
+  login: (token: string) => void;
   logout: () => void;
-  updateEmail: (newEmail:string) => void
+  updateEmail: (newEmail:string) => void;
+  setUser: (newUser: User) => void
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -20,13 +27,15 @@ export const useAuthStore = create<AuthState>()(
       isAuthenticated: false,
       user: {
         email: "",
+        username: "",
+        role: Role.OWNER,
+        contactPhone: ""
       },
-      login: (token, user) => {
+      login: (token) => {
         set({ 
-          token, 
-          isAuthenticated: true,
-          user
-        });
+              token, 
+              isAuthenticated: true,
+            });
       },
 
       logout: () => {
@@ -40,6 +49,11 @@ export const useAuthStore = create<AuthState>()(
           },
         }));
       },
+      setUser: (newUser: User) =>{
+        set({
+          user: newUser
+        })
+      }
     }),
     {
       name: "auth-storage",

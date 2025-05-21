@@ -9,7 +9,7 @@ import AuthFormContainer from "../components/AuthFormContainer";
 import ButtonPrimary from "../../../shared/ui/components/ButtonPrimary";
 import { FormValues } from "../types";
 
-import {loginService } from "../services/AuthService";
+import {loginService, me } from "../services/AuthService";
 import { useAuthStore} from "../../../store/auth.store";
 import { showError, showSuccess } from "../../../shared/ui/toast";
 import HeaderForm from "../../../shared/ui/components/HeaderForm";
@@ -23,7 +23,7 @@ import Loader from "../../../shared/ui/components/Loader";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const {login} = useAuthStore();
+  const {login, setUser, } = useAuthStore();
   const setParkingData = useParkingStore((state) => state.setParkingData)
   //const parkingName = useParkingStore((state) => state.parking.parkingName)
   const {
@@ -81,6 +81,7 @@ const LoginPage = () => {
       setIsLoading(false);
     }
   };
+
   const log = {
     show: true,
     description: "¿Eres nuevo?",
