@@ -57,7 +57,7 @@ const Header: React.FC = () => {
   const loggedInButtons: HeaderButton[] = [
   { label: "Mi cuenta", icon: <ManageAccountsOutlinedIcon />, path: "/profile" },
 
-  // 👇 Si sos OWNER
+  //Si sos OWNER
   ...(role === 'OWNER' ? [
     {
       label: "Mi parking",
