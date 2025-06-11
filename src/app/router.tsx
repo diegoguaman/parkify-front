@@ -17,6 +17,7 @@ import AvailabilitySpotsPage from '../features/parkings/pages/AvailabilitySpotsP
 import ParkingProtectedRoute from '../features/auth/components/ParkingProtectedRoute';
 import NoParkingRoute from '../features/auth/components/NoParkingRoute';
 import RecommendedPage from '../features/maps/pages/RecommendedPage';
+import ProfilePage from '../features/auth/pages/ProfilePage';
 
 const routes = [
   {
@@ -43,7 +44,8 @@ const routes = [
       {
         element: <PrivateRoute />,
         children: [
-          { path: "profile", element: <ProfileOwnerPage /> },
+          { path: "profile", element: <ProfilePage /> },
+          { path: "profile-parking", element: <ProfileOwnerPage /> },
           { path: "change-password", element: <ChangePasswordPage /> },
           { path: "delete-account", element: <DeleteAccountPage /> },
         ],
