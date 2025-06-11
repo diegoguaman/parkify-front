@@ -21,6 +21,7 @@ import { useAuthStore } from "../../store/auth.store";
 import { useParkingStore } from "../../store/parking.store";
 import { getHeaderRef } from "../hooks/useScrollToHeader";
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import LocalParkingIcon from '@mui/icons-material/LocalParking'; 
 
 type HeaderButton = {
   label: string;
@@ -40,7 +41,7 @@ const Header: React.FC = () => {
   const parkingId = useParkingStore((state) => state.parking.id)
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
+  const role = useAuthStore(state => state.user.role);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -54,12 +55,19 @@ const Header: React.FC = () => {
 
   // Botones cuando estás logueado
   const loggedInButtons: HeaderButton[] = [
-    { label: "Mi cuenta", icon: <ManageAccountsOutlinedIcon />, path: "/profile" },
-    ...(parkingId ? [{
-      label: "Plazas disponibles", icon: <DirectionsCarIcon />, path: "/parking-availability",
-    }] : []),
-    { label: "Cerrar sesión", icon: <LogoutOutlinedIcon />, action: "logout", color: "error.main" },
-  ];
+  { label: "Mi cuenta", icon: <ManageAccountsOutlinedIcon />, path: "/profile" },
+
+  // 👇 Si sos OWNER
+  ...(role === 'OWNER' ? [
+    {
+      label: "Mi parking",
+      icon: <DirectionsCarIcon />,
+      path: "/profile-parking",
+    }
+  ] : []),
+
+  { label: "Cerrar sesión", icon: <LogoutOutlinedIcon />, action: "logout", color: "error.main" },
+];
 
   const buttonsToShow = isLoggedIn ? loggedInButtons : guestButtons;
 
