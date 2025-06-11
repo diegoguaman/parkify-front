@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { showError, showSuccess } from "../../../shared/ui/toast";
 import HeaderForm from "../../../shared/ui/components/HeaderForm";
 import { updateParking } from "../services/ParkingService";
-import { Parking, useParkingStore } from "../../../store/parking.store";
+import { useParkingStore } from "../../../store/parking.store";
 import { FormParkingValues } from "../../../shared/types";
 import ParkingEmptyState from "../components/ParkingEmptyState";
 import ParkingFormContainer from "../components/ParkingFormContainer";
@@ -10,21 +10,31 @@ import { useScrollToHeader } from "../../../shared/hooks/useScrollToHeader";
 import { useEffect, useState } from "react";
 import { handleError } from "../../../shared/utils/handleError";
 import { AxiosError } from "axios";
+import { Parking } from "../../../shared/types/types";
 // import { useAuthStore } from "../../../store/auth.store";
 // import { updateUserEmail } from "../../auth/services/AuthService";
 
 //mapea de un parking a un FormParkingValues
 const mapParkingToFormValues = (parking: Parking): FormParkingValues => ({
-  imageParking: null,
-  parkingImageUrl: parking.imageParking, 
-  email: parking.email,
-  totalSpots: parking.totalSpots,
-  hourlyRate: parking.hourlyRate,
-  openTime: parking.openTime,
-  closeTime: parking.closeTime,
   parkingName: parking.parkingName,
   parkingAddress: parking.parkingAddress,
   parkingPhone: parking.parkingPhone,
+
+  imageParking: null,                 // nuevo archivo (vacío por defecto)
+  imageUrl: parking.imageUrl,     // ya subida
+
+  totalSpots: parking.totalSpots,
+  availableSpots: parking.availableSpots,
+
+  extraFeatures: parking.extraFeatures ?? [],
+  ratingAvg: parking.ratingAvg,
+  ratingCount: parking.ratingCount,
+
+  lat: parking.lat,
+  lng: parking.lng,
+
+  accessType: parking.accessType,
+  accessInstructions: parking.accessInstructions,
 });
 
 const ProfileOwnerPage = () => {
@@ -83,7 +93,7 @@ const ProfileOwnerPage = () => {
   return (
     <Box>
       <HeaderForm path="/" />
-      {parkingData.id === '' && !parkingData.isParkingLoaded ? (
+      {parkingData.id === '' ? (
         <ParkingEmptyState />
       ) : (
         <ParkingFormContainer
