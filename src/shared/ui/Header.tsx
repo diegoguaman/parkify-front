@@ -21,7 +21,6 @@ import { useAuthStore } from "../../store/auth.store";
 import { useParkingStore } from "../../store/parking.store";
 import { getHeaderRef } from "../hooks/useScrollToHeader";
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
-import LocalParkingIcon from '@mui/icons-material/LocalParking'; 
 
 type HeaderButton = {
   label: string;
@@ -38,7 +37,6 @@ const Header: React.FC = () => {
   const isLoggedIn = useAuthStore((state) => state.isAuthenticated);
   const logout = useAuthStore((state) => state.logout); // Solo si ya tienes una función logout
   const clearParkingData = useParkingStore((state) => state.clearParkingData); 
-  const parkingId = useParkingStore((state) => state.parking.id)
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const role = useAuthStore(state => state.user.role);
