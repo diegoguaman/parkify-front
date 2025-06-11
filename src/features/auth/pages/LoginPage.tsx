@@ -53,16 +53,13 @@ const LoginPage = () => {
       const user = await me()
       //guardamos en store
       setUser(user)
-      console.log(user)
       if(user){
         showSuccess(`Bienvenido ${user.username}`);
       } else {
         showSuccess(`Bienvenido`);
       }
       //ver si tiene ya un parking asociado
-      //queda comentado hasta que se agregue el parking
-      // const parking = await getMyParking(); 
-      // console.log(parking)
+    //  const parking = await getMyParking(); 
       // if (parking) {
       //   setParkingData(parking);
       //   showSuccess(`Bienvenido ${parking.parkingName}`);
