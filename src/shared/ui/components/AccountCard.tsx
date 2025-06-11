@@ -1,13 +1,13 @@
 import CardContainer from "./CardContainer";
 import ButtonHomeAction from "./ButtonHomeAction";
 import { Box, Typography } from "@mui/material";
-import { useParkingStore } from "../../../store/parking.store";
+//import { useParkingStore } from "../../../store/parking.store";
 import { useAuthStore } from "../../../store/auth.store";
 
 
 const AccountCard = () => {
   //const user = useAuthStore((state) => state.user);
-  const parking = useParkingStore((state) => state.parking)
+  //const parking = useParkingStore((state) => state.parking)
   const user = useAuthStore((state) => state.user)
   return (
     <CardContainer>
