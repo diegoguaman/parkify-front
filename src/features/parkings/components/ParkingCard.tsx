@@ -10,7 +10,8 @@ import {
 import ButtonWhatsapp from "../../../shared/ui/components/ButtonWhatsapp";
 import StarIcon from "@mui/icons-material/Star";
 import { AvailabilityStatus } from "./AvailabilityStatus";
-import { Parking } from "../../../store/parking.store";
+import { Parking } from "../../../shared/types/types";
+//import { Parking } from "../../../store/parking.store";
 
 type ParkingProfileProps = {
   parking: Parking;
@@ -23,10 +24,13 @@ export const ParkingCard = ({ parking }: ParkingProfileProps) => {
     "",
     `📍 ${parking.parkingName}`,
     `🏠 Dirección: ${parking.parkingAddress}`,
-    `💵 Precio por hora: ${parking.hourlyRate}€`,
-    `🕒 Horario: ${parking.openTime ? parking.openTime : "No disponible"} a ${parking.closeTime ? parking.closeTime : "No disponible"}`,
+    `💵 Precio por hora: 10€`,
+    // `💵 Precio por hora: ${parking.hourlyRate}€`,
+    `🕒 Horario: 13:00 a 18:00`,
+    // `🕒 Horario: ${parking.openTime ? parking.openTime : "No disponible"} a ${parking.closeTime ? parking.closeTime : "No disponible"}`,
     `✅ Plazas disponibles: ${parking.availableSpots}`,
-    `⭐ Valoración: ${parking.rating ? parking.rating : "No disponible"}/5`,
+    `⭐ Valoración: 4/5`,
+    // `⭐ Valoración: ${parking.rating ? parking.rating : "No disponible"}/5`,
     "",
     `🔗 Más info: http://localhost:5173/parking-availability?id=${parking.id}`,
   ].join("\n");
@@ -60,11 +64,11 @@ export const ParkingCard = ({ parking }: ParkingProfileProps) => {
   >
     <CardMedia
       component="img"
-      image={parking.imageParking}
+      image={parking.imageUrl}
       alt={parking.parkingName}
       sx={{
         width: "100px",
-        flex: 1,                  // 👈 fuerza a estirarse verticalmente
+        flex: 1,
         objectFit: "cover",
 
       }}
@@ -89,8 +93,11 @@ export const ParkingCard = ({ parking }: ParkingProfileProps) => {
               {parking.parkingName}
             </Typography>
             <Typography variant="body2" fontWeight={500}>
-              {parking.hourlyRate}€ / h
+              10€ / h
             </Typography>
+            {/* <Typography variant="body2" fontWeight={500}>
+              {parking.hourlyRate}€ / h
+            </Typography> */}
           </Box>
 
           {/* Dirección */}
@@ -103,9 +110,10 @@ export const ParkingCard = ({ parking }: ParkingProfileProps) => {
             <Typography variant="body2" color="success.main" fontWeight={500}>
               {/* {parking.distance} km ({parking.estimatedTime}) */}
               {/* {parking.distance.toFixed()} km ("11 min") */}
-              {parking.distance != null
+              {/* {parking.distance != null
               ? `${parking.distance.toFixed(0)} km`
-              : '—'}
+              : '—'} */}
+              1.1 km
             </Typography>
             <Box display="flex" alignItems="center" gap={0.5}>
               <Typography variant="body2" fontWeight={500}>
@@ -122,11 +130,12 @@ export const ParkingCard = ({ parking }: ParkingProfileProps) => {
             </Box>
 
             <Chip
-              label={
-                parking.openTime && parking.closeTime
-                  ? `${parking.openTime} a ${parking.closeTime}`
-                  : "12:00 a 19:00" //ver xq no funciona
-              }
+              // label={
+              //   parking.openTime && parking.closeTime
+              //     ? `${parking.openTime} a ${parking.closeTime}`
+              //     : "12:00 a 19:00" //ver xq no funciona
+              // }
+              label={"12:00 a 19:00"}
               size="small"
               sx={{
                 bgcolor: "#f5f5f5",

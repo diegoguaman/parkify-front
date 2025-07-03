@@ -19,7 +19,7 @@ const ParkingBannerForm: React.FC<Props> = ({ setValue, errors, trigger } ) => {
   const [preview, setPreview] = useState<string | null>(null);
   const openModal = useModalStore((state) => state.openModal);
   const closeModal = useModalStore((state) => state.closeModal);
-  const imageParking = useParkingStore((state) => state.parking.imageParking)
+  const imageParking = useParkingStore((state) => state.parking.imageUrl)
   const parkingName = useParkingStore((state) => state.parking.parkingName)
   const fileInputRef = useRef<HTMLInputElement>(null);
 
