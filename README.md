@@ -2,6 +2,27 @@
 
 Aplicación web para encontrar y reservar plazas de estacionamiento en tiempo real.
 
+## 🎉 ¡Migración Completada a Stack 100% Gratuito!
+
+Este proyecto ahora usa **Leaflet + OpenStreetMap** en lugar de Google Maps, lo que significa:
+- ✅ **100% Gratuito** - Sin costos ni límites
+- ✅ **Sin API Keys** - No requiere configuración de servicios de pago
+- ✅ **Sin tarjeta de crédito** - Nunca te pedirá una
+- ✅ **Open Source** - Total libertad de uso
+
+📖 **Ver [MIGRATION_GUIDE.md](./MIGRATION_GUIDE.md)** para detalles técnicos de la migración.
+
+## 🛠️ Tecnologías Principales
+
+- **React** + **Vite** - Framework frontend moderno y rápido
+- **TypeScript** - Tipado estático para código más seguro
+- **Leaflet** + **OpenStreetMap** - Mapas interactivos gratuitos
+- **Nominatim** - Autocompletado de direcciones sin API key
+- **Zustand** - Gestión de estado global simple y eficiente
+- **Material UI** - Componentes de interfaz modernos
+- **React Hook Form** - Formularios con validación
+- **Axios** - Cliente HTTP para comunicación con el backend
+
 ---
 
 ## 🛠️ Cómo empezar a trabajar

@@ -1,0 +1,85 @@
+/* Leaflet custom marker styles */
+
+.custom-price-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+.price-marker {
+  position: relative;
+  background-color: #fff;
+  color: #3445c5;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  min-width: 60px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.price-marker:hover {
+  background-color: #3445c5;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.price-marker-arrow {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #fff;
+  transition: border-top-color 0.2s ease;
+}
+
+.price-marker:hover .price-marker-arrow {
+  border-top-color: #3445c5;
+}
+
+/* Full parking style */
+.price-marker-full {
+  color: #838DA0 !important;
+}
+
+.price-marker-full:hover {
+  background-color: #838DA0 !important;
+  color: #fff !important;
+}
+
+.price-marker-full:hover .price-marker-arrow {
+  border-top-color: #838DA0 !important;
+}
+
+/* Recommended parking style */
+.price-marker-recommended {
+  background-color: #FFDE59 !important;
+  color: #000 !important;
+}
+
+.price-marker-recommended .price-marker-arrow {
+  border-top-color: #FFDE59 !important;
+}
+
+.price-marker-recommended:hover {
+  color: #FFDE59 !important;
+  background-color: #000 !important;
+}
+
+.price-marker-recommended:hover .price-marker-arrow {
+  border-top-color: #000 !important;
+}
+
+/* Normal parking style (default) */
+.price-marker-normal {
+  /* Uses default styles */
+}
+

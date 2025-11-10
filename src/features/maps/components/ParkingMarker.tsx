@@ -1,39 +1,36 @@
-import { OverlayView } from '@react-google-maps/api';
-import styles from './Maps.module.css';
-//import { recommendedParkingIds } from '../data/mock-parkings';
-//import { Parking } from '../../../shared/types/parking';
+import { Marker } from 'react-leaflet';
 import { Parking } from '../../../store/parking.store';
-//import { useParkingStore } from '../../parkings/store/parkingStore';
+import { createPriceMarkerIcon } from '../utils/parking-icons';
+import { recommendedParkingIds } from '../data/mock-parkings';
 
 type Props = {
   parking: Parking;
   onClick: () => void;
 };
-const recommendedParkingIds = [105,]; // deberia venir del back
-const ParkingMarker = ({ parking, onClick }: Props) => {
-  //const setSelected = useParkingStore((s) => s.setSelected);
-  //const availability = useParkingStore((s)=> s.availability)
-  //const parkingId = useParkingStore((s) => s.parking.id)
-  //verifica si el parking esta en la lista de recomendados
 
-  const isRecommended = recommendedParkingIds.includes(Number(parking.id));
+/**
+ * ParkingMarker - Custom marker for parking spots on Leaflet map
+ * Displays price with different styles based on availability and recommendation
+ */
+const ParkingMarker = ({ parking, onClick }: Props) => {
+  const isRecommended = recommendedParkingIds.includes(parking.id);
   const isFull = parking.availableSpots === 0;
 
-  const classes = [styles.priceMarker];
-  if (isFull) classes.push(styles.full);
-  else if (isRecommended) classes.push(styles.recommendation);
+  // Determine marker type
+  let markerType: 'normal' | 'full' | 'recommended' = 'normal';
+  if (isFull) markerType = 'full';
+  else if (isRecommended) markerType = 'recommended';
+
+  const icon = createPriceMarkerIcon(parking.hourlyRate, markerType);
 
   return (
-    <OverlayView
-      key={parking.id}
-      position={{ lat: parking.lat, lng: parking.lng }}
-      mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
-    >
-      <div className={classes.join(' ')} onClick={onClick}>
-        ${parking.hourlyRate}
-        <div className={styles.priceMarkerArrow} />
-      </div>
-    </OverlayView>
+    <Marker
+      position={[parking.lat, parking.lng]}
+      icon={icon}
+      eventHandlers={{
+        click: onClick,
+      }}
+    />
   );
 };
 

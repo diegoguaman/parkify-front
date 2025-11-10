@@ -1,58 +1,51 @@
-import { GoogleMap } from '@react-google-maps/api';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import { useUserLocationStore } from '../store/userLocation.store';
 import { MarkerList } from './MarkerList';
-import { Parking, useParkingStore  } from '../../../store/parking.store';
-import Loader from '../../../shared/ui/components/Loader'; // Asegúrate que la ruta es correcta
+import { Parking, useParkingStore } from '../../../store/parking.store';
+import Loader from '../../../shared/ui/components/Loader';
 import { useEffect } from 'react';
 import MapControls from './MapControls';
 
-const containerStyle = { width: '100%', height: '100vh' };
-
 type MapViewProps = {
   onParkingSelect: (parking: Parking | null) => void;
-  onListClick: () => void
+  onListClick: () => void;
 };
 
+/**
+ * MapView - Main map component using Leaflet and OpenStreetMap
+ * Free alternative to Google Maps
+ */
 export const MapView = ({ onParkingSelect, onListClick }: MapViewProps) => {
   const location = useUserLocationStore((s) => s.location);
-  const {
-    //nearbyParkings,
-    isLoadingNearby,
-    fetchNearbyParkings
-  } = useParkingStore();
+  const { isLoadingNearby, fetchNearbyParkings } = useParkingStore();
 
   useEffect(() => {
     if (location) {
-      // sólo cuando location exista, pedimos al backend
+      // Fetch nearby parkings when location is available
       fetchNearbyParkings(location.lat, location.lng, 5);
     }
   }, [location, fetchNearbyParkings]);
 
   if (!location || isLoadingNearby) {
-    // mostramos loader mientras obtenemos la ubicación o los parkings
     return <Loader fullScreen />;
   }
 
   return (
-    <GoogleMap
-      center={location}
+    <MapContainer
+      center={[location.lat, location.lng]}
       zoom={15}
-      mapContainerStyle={containerStyle}
-      onClick={() => onParkingSelect(null)}
-      options={{
-        clickableIcons: false,
-        gestureHandling: "greedy", // 👈 esto permite mover con un solo dedo
-        styles: [
-          {
-            featureType: 'poi',
-            stylers: [{ visibility: 'off' }],
-          },
-        ],
-      }}
-      
+      style={{ width: '100%', height: '100vh' }}
+      zoomControl={false}
+      scrollWheelZoom={true}
     >
+      {/* OpenStreetMap tiles - Free and open source */}
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      
       <MapControls showList={true} toggleList={onListClick} />
       <MarkerList onParkingSelect={onParkingSelect} />
-    </GoogleMap>
+    </MapContainer>
   );
 };

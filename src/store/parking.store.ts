@@ -3,6 +3,22 @@ import { persist } from "zustand/middleware";
 import { getNearbyParkings } from "../features/parkings/services/ParkingService";
 import useMapStore from '../features/maps/store/useMap.store';
 
+/**
+ * Calculate distance between two coordinates using Haversine formula
+ * Returns distance in kilometers
+ */
+const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+  const R = 6371; // Earth's radius in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+};
+
 export interface Parking {
   id: string;
   imageParking: string;
@@ -127,6 +143,24 @@ interface ParkingState {
             useMapStore.getState().initializeFilteredParkingsFrom(mapped);
             // 3️⃣ guarda en el store
             set({ nearbyParkings: mapped });
+          } catch (error) {
+            // Si hay error (backend no disponible), usamos datos mock
+            console.warn('⚠️ Backend no disponible, usando datos mock para desarrollo');
+            
+            // Importar datos mock dinámicamente
+            import('../features/maps/data/mock-parkings').then(({ parkingsData }) => {
+              // Filtrar parkings cercanos a la ubicación (radio de búsqueda)
+              const nearbyMockParkings = parkingsData.filter(parking => {
+                const distance = calculateDistance(lat, lon, parking.lat, parking.lng);
+                return distance <= radius;
+              });
+
+              // Si no hay parkings en el radio, mostrar todos los mock
+              const parkingsToShow = nearbyMockParkings.length > 0 ? nearbyMockParkings : parkingsData;
+
+              useMapStore.getState().initializeFilteredParkingsFrom(parkingsToShow);
+              set({ nearbyParkings: parkingsToShow });
+            });
           } finally {
             set({ isLoadingNearby: false });
           }
