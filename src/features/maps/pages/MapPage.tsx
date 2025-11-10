@@ -1,23 +1,109 @@
-import { useState } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { useUserLocation } from '../hooks/useUserLocation';
 import { MapWrapper } from '../components/MapWrapper';
 import { MapView } from '../components/MapView';
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, Fab, Tooltip } from '@mui/material';
 import { Parking } from '../../../store/parking.store';
 import { ParkingCard } from '../../../features/parkings/components/ParkingCard';
 import useMapStore from '../store/useMap.store';
+import ParkingDetailModal from '../components/ParkingDetailModal';
+import RecommendationsPanel from '../components/RecommendationsPanel';
+import { RecommendedZone } from '../utils/recommendations';
+import { useRecommendations } from '../hooks/useRecommendations';
+import { useUserLocationStore } from '../store/userLocation.store';
+import RecommendIcon from '@mui/icons-material/Recommend';
+import LocationPermissionModal from '../components/LocationPermissionModal';
 
 const MapPage = () => {
-  useUserLocation();
+  const { error: locationError, retry: retryLocation } = useUserLocation();
   const [selectedParking, setSelectedParking] = useState<Parking | null>(null);
   const [showList, setShowList] = useState(false);
-  const filteredParkings = useMapStore((state) => state.filteredParkings); // los parkings filtrados
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showRecommendations, setShowRecommendations] = useState(true);
+  const [showRecommendationsPanel, setShowRecommendationsPanel] = useState(false);
+  const [showLocationModal, setShowLocationModal] = useState(false);
+  const filteredParkings = useMapStore((state) => state.filteredParkings);
+  const location = useUserLocationStore((s) => s.location);
+  
+  // Show location modal if there's a permission error
+  useEffect(() => {
+    if (locationError === 'permission') {
+      setShowLocationModal(true);
+    }
+  }, [locationError]);
+  
+  // Calculate recommended zones
+  const recommendedZones = useRecommendations(
+    filteredParkings,
+    location?.lat,
+    location?.lng
+  );
+
+  const handleParkingSelect = (parking: Parking) => {
+    setSelectedParking(parking);
+    setIsModalOpen(true);
+  };
+
+  const handleZoneSelect = useCallback((zone: RecommendedZone) => {
+    console.log('Zone selected:', zone);
+    // Could implement map centering here if needed
+    // For now, zones are visible on the map
+  }, []);
 
   return (
     <Box sx={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
       <MapWrapper>
       
-        <MapView onParkingSelect={setSelectedParking} onListClick={() => setShowList(prev => !prev)} />
+        <MapView 
+          onParkingSelect={handleParkingSelect} 
+          onListClick={() => setShowList(prev => !prev)}
+          showRecommendations={showRecommendations}
+          onZoneClick={handleZoneSelect}
+        />
+
+        {/* Recommendations Panel */}
+        <RecommendationsPanel
+          zones={recommendedZones}
+          onZoneSelect={handleZoneSelect}
+          onClose={() => setShowRecommendationsPanel(false)}
+          isOpen={showRecommendationsPanel}
+        />
+
+        {/* Toggle Recommendations Button */}
+        <Tooltip title={showRecommendationsPanel ? "Ocultar recomendaciones" : "Mostrar recomendaciones"}>
+          <Fab
+            color="primary"
+            size="medium"
+            onClick={() => setShowRecommendationsPanel(prev => !prev)}
+            sx={{
+              position: 'absolute',
+              top: { xs: 16, md: 24 },
+              left: { xs: 16, md: 24 },
+              zIndex: 999,
+              boxShadow: 3,
+            }}
+          >
+            <RecommendIcon />
+          </Fab>
+        </Tooltip>
+
+        {/* Modal de detalles del parking */}
+        <ParkingDetailModal
+          parking={selectedParking}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+
+        {/* Location Permission Modal */}
+        <LocationPermissionModal
+          isOpen={showLocationModal}
+          onClose={() => setShowLocationModal(false)}
+          onRetry={() => {
+            retryLocation();
+            setShowLocationModal(false);
+          }}
+          errorType={locationError}
+        />
 
         {selectedParking && !showList &&(
           <Box

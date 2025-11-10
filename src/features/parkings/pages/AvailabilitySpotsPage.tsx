@@ -1,4 +1,4 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, TextField, Typography, Alert } from "@mui/material";
 import HeaderForm from "../../../shared/ui/components/HeaderForm";
 import ParkingBannerForm from "../../../shared/ui/components/ParkingBannerForm";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -15,6 +15,7 @@ import { handleError } from "../../../shared/utils/handleError";
 import { AxiosError } from "axios";
 import { updateAvailabilityParking } from "../services/ParkingService";
 import Loader from "../../../shared/ui/components/Loader";
+// import { useWebSocket } from "../../../hooks/useWebSocket"; // ⚠️ Comentado temporalmente
 
 //proteger esta ruta solo se puede si hay un parking registrado
 const AvailabilitySpotsPage = () => {
@@ -26,6 +27,9 @@ const AvailabilitySpotsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null); 
   const [spots, setSpots] = useState<number>(availability[id] || 0);
+  // const { isConnected, updateAvailability } = useWebSocket(); // ⚠️ Comentado temporalmente
+  const isConnected = false; // ⚠️ Hardcoded mientras backend no está listo
+  
   useEffect(() => {
     setSpots(availability[id] || 0);
   }, [availability[id]]);
@@ -50,6 +54,16 @@ const AvailabilitySpotsPage = () => {
       //setea la disponibilidad en la store
       console.log(availabilityResponse)
       setAvailability(id, spots)
+      
+      // 🔥 Emitir actualización en tiempo real via WebSocket
+      // ⚠️ Comentado temporalmente hasta que backend esté listo
+      // if (isConnected) {
+      //   updateAvailability(id, spots);
+      //   console.log('📡 WebSocket: Availability update emitted');
+      // } else {
+      //   console.warn('⚠️ WebSocket not connected. Update saved but not broadcasted.');
+      // }
+      
       showSuccess("Los cambios se han guardado")
       navigate("/")
     } catch (err) {
@@ -66,6 +80,13 @@ const AvailabilitySpotsPage = () => {
       <HeaderForm path="/" />
       <ParkingBannerForm />
       <Box className={styles.registerForm}>
+        {/* WebSocket Status Indicator */}
+        {/* ⚠️ Comentado temporalmente */}
+        {/* {!isConnected && (
+          <Alert severity="warning" sx={{ mb: 2 }}>
+            ⚠️ Sin conexión en tiempo real. Los cambios se guardarán pero no se notificarán automáticamente.
+          </Alert>
+        )} */}
         <Box
           display="flex"
           flexDirection="column"
