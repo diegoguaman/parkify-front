@@ -1,0 +1,104 @@
+{
+  "description": "Datos de muestra de 5 estacionamientos en Madrid, España para demonstración",
+  "instructions": {
+    "es": "Estos datos pueden ser cargados manualmente en el backend o usados para pruebas de la aplicación",
+    "en": "This data can be manually loaded into the backend or used for application testing"
+  },
+  "parkings": [
+    {
+      "name": "Parking Plaza Mayor",
+      "address": "Plaza Mayor, 28, 28012 Madrid, España",
+      "latitude": 40.4153,
+      "longitude": -3.7074,
+      "capacity": 120,
+      "currentAvailability": 35,
+      "hourlyRate": 3.50,
+      "workingHours": "00:00/23:59",
+      "parkingPhone": "+34910001000",
+      "parkingImageUrl": "https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=800&q=80",
+      "description": "Estacionamiento subterráneo de 3 plantas ubicado en pleno centro histórico de Madrid, a pocos metros de la Plaza Mayor. Acceso 24/7, seguridad permanente y sistema de vigilancia.",
+      "features": ["Acceso 24h", "Vigilancia", "Cubierto", "Céntrico"]
+    },
+    {
+      "name": "Parking Retiro",
+      "address": "Calle de Alfonso XII, 28014 Madrid, España",
+      "latitude": 40.4153,
+      "longitude": -3.6844,
+      "capacity": 80,
+      "currentAvailability": 22,
+      "hourlyRate": 2.80,
+      "workingHours": "07:00/22:00",
+      "parkingPhone": "+34910002000",
+      "parkingImageUrl": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=800&q=80",
+      "description": "Parking próximo al Parque del Retiro. Ideal para visitas turísticas y paseos por el parque. Tarifas reducidas para estancias superiores a 4 horas.",
+      "features": ["Cerca del Retiro", "Tarifas reducidas", "Acceso fácil"]
+    },
+    {
+      "name": "Parking Puerta del Sol",
+      "address": "Calle Carmen, 1, 28013 Madrid, España",
+      "latitude": 40.4169,
+      "longitude": -3.7035,
+      "capacity": 150,
+      "currentAvailability": 8,
+      "hourlyRate": 4.20,
+      "workingHours": "00:00/23:59",
+      "parkingPhone": "+34910003000",
+      "parkingImageUrl": "https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=800&q=80",
+      "description": "El parking más céntrico de Madrid, ubicado a 50 metros de la Puerta del Sol. Perfecto para compras en Gran Vía y visitas al centro. Parking moderno con sistema de guiado de plazas.",
+      "features": ["Super céntrico", "Sistema de guiado", "Acceso 24h", "Moderno"]
+    },
+    {
+      "name": "Parking Gran Vía",
+      "address": "Gran Vía, 45, 28013 Madrid, España",
+      "latitude": 40.4206,
+      "longitude": -3.7063,
+      "capacity": 100,
+      "currentAvailability": 45,
+      "hourlyRate": 3.80,
+      "workingHours": "06:00/02:00",
+      "parkingPhone": "+34910004000",
+      "parkingImageUrl": "https://images.unsplash.com/photo-1566933293069-b55c7f326dd4?w=800&q=80",
+      "description": "Parking en plena Gran Vía, rodeado de teatros, tiendas y restaurantes. Acceso directo a zona peatonal. Descuentos para clientes de establecimientos asociados.",
+      "features": ["En Gran Vía", "Zona comercial", "Descuentos", "Teatro cercano"]
+    },
+    {
+      "name": "Parking Estadio Santiago Bernabéu",
+      "address": "Avenida de Concha Espina, 1, 28036 Madrid, España",
+      "latitude": 40.4530,
+      "longitude": -3.6883,
+      "capacity": 200,
+      "currentAvailability": 120,
+      "hourlyRate": 3.00,
+      "workingHours": "08:00/23:00",
+      "parkingPhone": "+34910005000",
+      "parkingImageUrl": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=800&q=80",
+      "description": "Gran parking junto al estadio Santiago Bernabéu. Ideal para eventos deportivos y conciertos. Alta capacidad y fácil acceso desde M-30. Tarifa especial durante partidos.",
+      "features": ["Gran capacidad", "Cerca del Bernabéu", "Eventos", "Fácil acceso"]
+    }
+  ],
+  "notes": {
+    "es": [
+      "Los precios están en euros por hora",
+      "Las coordenadas son precisas y corresponden a ubicaciones reales en Madrid",
+      "Los horarios están en formato HH:MM/HH:MM (apertura/cierre)",
+      "currentAvailability debe ser menor o igual que capacity",
+      "Las imágenes provienen de Unsplash y son de uso libre"
+    ],
+    "en": [
+      "Prices are in euros per hour",
+      "Coordinates are accurate and correspond to real locations in Madrid",
+      "Working hours are in HH:MM/HH:MM format (opening/closing)",
+      "currentAvailability must be less than or equal to capacity",
+      "Images are from Unsplash and are free to use"
+    ]
+  },
+  "api_endpoints": {
+    "create_parking": "POST /api/parkings/my",
+    "get_parkings": "GET /api/parkings/nearby?lat=40.4168&lon=-3.7038&radius=5000",
+    "update_availability": "PATCH /api/parkings/{id}/availability"
+  },
+  "curl_examples": {
+    "create_parking_1": "curl -X POST 'https://tu-backend.onrender.com/api/parkings/my' \\\n  -H 'Content-Type: application/json' \\\n  -H 'Authorization: Bearer YOUR_TOKEN' \\\n  -d '{\n    \"name\": \"Parking Plaza Mayor\",\n    \"address\": \"Plaza Mayor, 28, 28012 Madrid, España\",\n    \"latitude\": 40.4153,\n    \"longitude\": -3.7074,\n    \"capacity\": 120,\n    \"hourlyRate\": 3.50,\n    \"workingHours\": \"00:00/23:59\",\n    \"parkingPhone\": \"+34910001000\",\n    \"parkingImageUrl\": \"https://images.unsplash.com/photo-1590674899484-d5640e854abe?w=800&q=80\",\n    \"description\": \"Estacionamiento subterráneo de 3 plantas ubicado en pleno centro histórico de Madrid\"\n  }'"
+  }
+}
+

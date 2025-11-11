@@ -22,10 +22,94 @@ Este proyecto ahora usa **Leaflet + OpenStreetMap** en lugar de Google Maps, lo 
 - **Material UI** - Componentes de interfaz modernos
 - **React Hook Form** - Formularios con validación
 - **Axios** - Cliente HTTP para comunicación con el backend
+- **Socket.IO** - Comunicación en tiempo real (WebSockets)
 
 ---
 
-## 🛠️ Cómo empezar a trabajar
+## 🚀 Inicio Rápido
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/tu-usuario/parkify-front.git
+cd parkify-front
+```
+
+### 2. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 3. Configurar variables de entorno
+
+**⚠️ IMPORTANTE:** El proyecto requiere variables de entorno para funcionar.
+
+```bash
+# En Windows:
+copy env.template .env
+
+# En Linux/Mac:
+cp env.template .env
+```
+
+Luego edita el archivo `.env` y configura:
+
+```env
+# URL de tu backend en Render (o localhost para desarrollo)
+VITE_API_URL=https://tu-backend.onrender.com/api
+
+# URL de WebSocket (misma URL pero sin /api)
+VITE_WEBSOCKET_URL=https://tu-backend.onrender.com
+
+# Modo de router (hash o browser)
+VITE_ROUTER_MODE=hash
+
+# Cloudinary (opcional, solo si vas a subir imágenes)
+VITE_CLOUDINARY_URL=https://api.cloudinary.com/v1_1/TU_CLOUD_NAME/image/upload
+VITE_CLOUDINARY_UPLOAD_PRESET=tu_upload_preset
+```
+
+📖 **Ver [env.template](./env.template)** para más detalles sobre cada variable.
+
+### 4. Ejecutar el proyecto
+
+```bash
+npm run dev
+```
+
+Abre `http://localhost:5173` en el navegador para ver la app en desarrollo.
+
+## 📦 Scripts Disponibles
+
+```bash
+npm run dev      # Inicia servidor de desarrollo
+npm run build    # Construye para producción
+npm run preview  # Previsualiza build de producción
+npm run lint     # Ejecuta linter
+```
+
+---
+
+## 🗺️ Datos de Muestra - Madrid
+
+El proyecto incluye datos de **5 estacionamientos en Madrid** listos para cargar:
+
+- **Parking Plaza Mayor** - Centro histórico
+- **Parking Retiro** - Junto al Parque del Retiro
+- **Parking Puerta del Sol** - El punto más céntrico
+- **Parking Gran Vía** - Zona comercial
+- **Parking Santiago Bernabéu** - Junto al estadio
+
+### 📋 Cómo cargar los datos
+
+Ver la guía completa: **[CARGA_DATOS_MADRID.md](./CARGA_DATOS_MADRID.md)**
+
+**Opción rápida:** Usa la interfaz web después de iniciar sesión para crear cada parking manualmente.
+
+---
+
+## 🛠️ Cómo empezar a trabajar (Desarrollo en equipo)
 
 ### 1. Crear tu rama desde una issue
 
@@ -35,20 +119,6 @@ Este proyecto ahora usa **Leaflet + OpenStreetMap** en lugar de Google Maps, lo 
    ```bash
    git checkout -b feature/nombre-de-la-tarea
    ```
-
-### 2. Instalar dependencias
-
-```bash
-npm install
-```
-
-### 3. Ejecutar el proyecto
-
-```bash
-npm run dev
-```
-
-Abre `http://localhost:5173` en el navegador para ver la app en desarrollo.
 
 ---
 
@@ -125,6 +195,57 @@ const { openModal } = useModalStore();
 ❌ No tiene botón "X" para cerrar.
 
 🔄 El contenido del modal es dinámico: podés pasarle cualquier JSX.
+
+---
+
+## 🌐 Despliegue (Deployment)
+
+### Netlify / Vercel (Recomendado)
+
+1. **Conecta tu repositorio** a Netlify o Vercel
+2. **Configura las variables de entorno** en el panel de configuración:
+   - `VITE_API_URL`
+   - `VITE_WEBSOCKET_URL`
+   - `VITE_ROUTER_MODE`
+   - `VITE_CLOUDINARY_URL` (opcional)
+   - `VITE_CLOUDINARY_UPLOAD_PRESET` (opcional)
+
+3. **Configuración de build:**
+   ```
+   Build Command: npm run build
+   Publish Directory: dist
+   ```
+
+### GitHub Pages
+
+1. Asegúrate de que `VITE_ROUTER_MODE=hash` en tu `.env`
+2. Actualiza `vite.config.ts` con tu base path:
+   ```ts
+   base: '/nombre-de-tu-repo/'
+   ```
+3. Ejecuta:
+   ```bash
+   npm run build
+   ```
+4. Sube la carpeta `dist` a GitHub Pages
+
+### Variables de Entorno en Producción
+
+⚠️ **IMPORTANTE:** Nunca expongas tokens o claves secretas. Las variables `VITE_*` son públicas en el bundle.
+
+---
+
+## 🧪 Testing
+
+```bash
+# Ejecutar tests (cuando estén configurados)
+npm run test
+
+# Ejecutar tests en modo watch
+npm run test:watch
+```
+
+---
 
 ## 📋 Instrucciones para implementar el Control de Plazas Disponibles
 
