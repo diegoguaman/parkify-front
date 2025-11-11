@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useUserLocation } from '../hooks/useUserLocation';
 import { MapWrapper } from '../components/MapWrapper';
 import { MapView } from '../components/MapView';
@@ -19,7 +19,7 @@ const MapPage = () => {
   const [selectedParking, setSelectedParking] = useState<Parking | null>(null);
   const [showList, setShowList] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showRecommendations, setShowRecommendations] = useState(true);
+  const [showRecommendations] = useState(true);
   const [showRecommendationsPanel, setShowRecommendationsPanel] = useState(false);
   const [showLocationModal, setShowLocationModal] = useState(false);
   const filteredParkings = useMapStore((state) => state.filteredParkings);
@@ -39,7 +39,7 @@ const MapPage = () => {
     location?.lng
   );
 
-  const handleParkingSelect = (parking: Parking) => {
+  const handleParkingSelect = (parking: Parking | null) => {
     setSelectedParking(parking);
     setIsModalOpen(true);
   };

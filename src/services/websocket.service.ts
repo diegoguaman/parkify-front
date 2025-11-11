@@ -1,11 +1,11 @@
-import { io, Socket } from 'socket.io-client';
+import io from 'socket.io-client';
 
 /**
  * WebSocketService - Manages real-time communication with backend
  * Handles parking availability updates via Socket.IO
  */
 class WebSocketService {
-  private socket: Socket | null = null;
+  private socket: ReturnType<typeof io> | null = null;
   private readonly url: string;
   private reconnectAttempts: number = 0;
   private readonly maxReconnectAttempts: number = 5;
@@ -151,7 +151,7 @@ class WebSocketService {
   /**
    * Gets the current socket instance (for advanced use)
    */
-  getSocket(): Socket | null {
+  getSocket(): ReturnType<typeof io> | null {
     return this.socket;
   }
 }

@@ -1,4 +1,4 @@
-import { Box, TextField, Typography, Alert } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import HeaderForm from "../../../shared/ui/components/HeaderForm";
 import ParkingBannerForm from "../../../shared/ui/components/ParkingBannerForm";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -28,11 +28,10 @@ const AvailabilitySpotsPage = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null); 
   const [spots, setSpots] = useState<number>(availability[id] || 0);
   // const { isConnected, updateAvailability } = useWebSocket(); // ⚠️ Comentado temporalmente
-  const isConnected = false; // ⚠️ Hardcoded mientras backend no está listo
   
   useEffect(() => {
     setSpots(availability[id] || 0);
-  }, [availability[id]]);
+  }, [availability, id]);
   const handleRemoveSpots = () => {
     spots > 0 && setSpots(spots - 1);
   };
