@@ -195,6 +195,36 @@ export async function getNearbyParkings(lat: number, lon: number, radius: number
     throw err;
   }
 }
+
+/**
+ * Obtiene los detalles completos de un parking específico
+ * @param id - ID del parking
+ * @returns Datos completos del parking
+ */
+export async function getParkingById(id: string) {
+  try {
+    const { data } = await api.get(`/parkings/${id}`);
+    return data;
+  } catch (error) {
+    console.error('Error fetching parking details:', error);
+    throw error as AxiosError;
+  }
+}
+
+/**
+ * Obtiene la disponibilidad de un parking específico
+ * @param id - ID del parking
+ * @returns Disponibilidad actual
+ */
+export async function getParkingAvailability(id: string): Promise<{ availableSpots: number }> {
+  try {
+    const { data } = await api.get<{ availableSpots: number }>(`/parkings/${id}/availability`);
+    return data;
+  } catch (error) {
+    console.error('Error fetching parking availability:', error);
+    throw error as AxiosError;
+  }
+}
 const parkingService = {
  
     // async updateParkingProfile(data: Omit<FormParkingValues, 'imageParking'> & { imageParking: File | null }) {

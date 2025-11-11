@@ -1,12 +1,17 @@
 import { Box, Button, Chip, Dialog, DialogContent, DialogTitle, Divider, IconButton, Typography } from '@mui/material';
+import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import { Parking } from '../../../store/parking.store';
+import { useAuthStore } from '../../../store/auth.store';
 import { toast } from 'react-toastify';
+import { createBooking } from '../../bookings/services/BookingService';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   parking: Parking | null;
@@ -16,9 +21,13 @@ type Props = {
 
 /**
  * ParkingDetailModal - Shows detailed information about a parking spot
- * Includes WhatsApp reservation button and directions
+ * Includes WhatsApp reservation, formal booking, and directions
  */
 const ParkingDetailModal = ({ parking, isOpen, onClose }: Props) => {
+  const [isBooking, setIsBooking] = useState(false);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const navigate = useNavigate();
+
   if (!parking) return null;
 
   const hasAvailableSpots = (parking.availableSpots ?? 0) > 0;
@@ -59,6 +68,49 @@ const ParkingDetailModal = ({ parking, isOpen, onClose }: Props) => {
   const handleGetDirections = () => {
     const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${parking.lat},${parking.lng}`;
     window.open(googleMapsUrl, '_blank');
+  };
+
+  /**
+   * Creates a formal booking through the backend
+   * Requires authentication
+   */
+  const handleFormalBooking = async () => {
+    if (!isAuthenticated) {
+      toast.info('Inicia sesión para reservar');
+      navigate('/login');
+      return;
+    }
+
+    if (!hasAvailableSpots) {
+      toast.error('No hay plazas disponibles en este momento');
+      return;
+    }
+
+    setIsBooking(true);
+    try {
+      const now = new Date();
+      const startTime = now;
+      const endTime = new Date(now.getTime() + 2 * 60 * 60 * 1000); // 2 horas después
+
+      await createBooking({
+        parkingId: parking.id,
+        startTime,
+        endTime,
+      });
+
+      toast.success('¡Reserva creada exitosamente!');
+      onClose();
+    } catch (error: any) {
+      console.error('Error creating booking:', error);
+      
+      if (error.response?.status === 403) {
+        toast.error('No tienes permisos para crear reservas. Verifica que tu cuenta tenga el rol DRIVER.');
+      } else {
+        toast.error('Error al crear la reserva. Intenta nuevamente.');
+      }
+    } finally {
+      setIsBooking(false);
+    }
   };
 
   /**
@@ -198,6 +250,27 @@ const ParkingDetailModal = ({ parking, isOpen, onClose }: Props) => {
 
         {/* Action Buttons */}
         <Box sx={{ display: 'flex', gap: 2, flexDirection: 'column' }}>
+          {/* Formal Booking - Only for authenticated users */}
+          {isAuthenticated && (
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              startIcon={<BookOnlineIcon />}
+              onClick={handleFormalBooking}
+              disabled={!hasAvailableSpots || isBooking}
+              fullWidth
+              sx={{
+                textTransform: 'none',
+                fontWeight: 'bold',
+                py: 1.5,
+              }}
+            >
+              {isBooking ? 'Reservando...' : hasAvailableSpots ? 'Reservar Ahora' : 'No disponible'}
+            </Button>
+          )}
+
+          {/* WhatsApp Reservation - Always available */}
           <Button
             variant="contained"
             color="success"
@@ -212,9 +285,10 @@ const ParkingDetailModal = ({ parking, isOpen, onClose }: Props) => {
               py: 1.5,
             }}
           >
-            {hasAvailableSpots ? 'Reservar por WhatsApp' : 'No disponible'}
+            {hasAvailableSpots ? 'Consultar por WhatsApp' : 'No disponible'}
           </Button>
 
+          {/* Directions */}
           <Button
             variant="outlined"
             color="primary"
@@ -230,6 +304,13 @@ const ParkingDetailModal = ({ parking, isOpen, onClose }: Props) => {
           >
             Cómo llegar
           </Button>
+
+          {/* Login prompt for non-authenticated users */}
+          {!isAuthenticated && (
+            <Typography variant="caption" color="text.secondary" textAlign="center" sx={{ mt: 1 }}>
+              💡 Inicia sesión para hacer reservas formales y gestionar tus bookings
+            </Typography>
+          )}
         </Box>
       </DialogContent>
     </Dialog>

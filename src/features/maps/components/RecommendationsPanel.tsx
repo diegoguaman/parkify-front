@@ -30,18 +30,29 @@ const RecommendationsPanel = ({ zones, onZoneSelect, onClose, isOpen }: Props) =
   return (
     <Box
       sx={{
-        position: 'absolute',
-        top: { xs: 60, md: 16 },
-        right: { xs: '50%', md: 16 },
-        transform: { xs: 'translateX(50%)', md: 'none' },
-        width: { xs: '95%', sm: 380, md: 400 },
-        maxHeight: { xs: '50vh', md: '80vh' },
+        position: 'fixed', // Changed from absolute to fixed
+        top: { xs: 140, md: 80 }, // More space from top to avoid overlap with header
+        left: { xs: 16, md: 80 }, // Position next to the FAB button
+        width: { xs: 'calc(100% - 32px)', sm: 380, md: 400 },
+        maxHeight: { xs: 'calc(100vh - 160px)', md: 'calc(100vh - 100px)' },
         bgcolor: 'background.paper',
         borderRadius: 2,
         boxShadow: 6,
         zIndex: 1000,
         overflowY: 'auto',
         p: 2,
+        // Animation
+        animation: 'slideIn 0.3s ease-out',
+        '@keyframes slideIn': {
+          from: {
+            opacity: 0,
+            transform: 'translateX(-20px)',
+          },
+          to: {
+            opacity: 1,
+            transform: 'translateX(0)',
+          },
+        },
       }}
     >
       {/* Header */}

@@ -15,6 +15,8 @@ type MapViewProps = {
   onListClick: () => void;
   showRecommendations?: boolean;
   onZoneClick?: (zone: RecommendedZone) => void;
+  isHidden?: boolean;
+  onShowRecommendedList?: () => void;
 };
 
 /**
@@ -25,7 +27,9 @@ export const MapView = ({
   onParkingSelect, 
   onListClick, 
   showRecommendations = true,
-  onZoneClick 
+  onZoneClick,
+  isHidden = false,
+  onShowRecommendedList
 }: MapViewProps) => {
   const location = useUserLocationStore((s) => s.location);
   const { isLoadingNearby, fetchNearbyParkings } = useParkingStore();
@@ -53,7 +57,11 @@ export const MapView = ({
     <MapContainer
       center={[location.lat, location.lng]}
       zoom={15}
-      style={{ width: '100%', height: '100vh' }}
+      style={{ 
+        width: '100%', 
+        height: '100vh',
+        display: isHidden ? 'none' : 'block' // Oculta el mapa pero lo mantiene montado
+      }}
       zoomControl={false}
       scrollWheelZoom={true}
     >
@@ -68,7 +76,11 @@ export const MapView = ({
         <RecommendedZones zones={recommendedZones} onZoneClick={onZoneClick} />
       )}
       
-      <MapControls showList={true} toggleList={onListClick} />
+      <MapControls 
+        showList={true} 
+        toggleList={onListClick}
+        onShowRecommendedList={onShowRecommendedList}
+      />
       <MarkerList onParkingSelect={onParkingSelect} />
     </MapContainer>
   );

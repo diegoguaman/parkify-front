@@ -8,9 +8,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 type MapControlsProps = {
   toggleList?: () => void;
-  showList?: boolean
+  showList?: boolean;
+  onShowRecommendedList?: () => void;
 };
-const MapControls = ({ toggleList, showList  }: MapControlsProps) => {
+const MapControls = ({ toggleList, showList, onShowRecommendedList }: MapControlsProps) => {
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false)
   return (
@@ -19,7 +20,8 @@ const MapControls = ({ toggleList, showList  }: MapControlsProps) => {
         sx={{
           zIndex: 1000,
           width: {xs: "100%", md:"30%"} ,
-          position:"relative"
+          position:"relative",
+          mt: { xs: '80px', md: '20px' }, // Espacio para el header
         }}
       >
         <Paper sx={{ px: 2, py: 1.5 }}>
@@ -86,7 +88,13 @@ const MapControls = ({ toggleList, showList  }: MapControlsProps) => {
             fullWidth
             variant="contained"
             color="secondary"
-            onClick={() => navigate("/recommended")}
+            onClick={() => {
+              if (onShowRecommendedList) {
+                onShowRecommendedList();
+              } else {
+                navigate("/recommended");
+              }
+            }}
             sx={{
               mt: 0.5,
               py: 0.5,
